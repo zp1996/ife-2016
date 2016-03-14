@@ -2,23 +2,13 @@
 	margin: 0px;
 	padding: 0px;
 }
-header{
-	width: 100%;
-	height: 40px;
-	background: #31AB9B;
-	text-align: center;
-	color: #fff;
-	font-size: 20px;
-	font-weight: 600;
-	line-height: 40px;
-}
 .container{
 	margin: 20px;
 	padding: 20px;
 	border: 1px solid #999;
 	background: #eee;
 	position: relative;
-	/*清除浮动满足高度自适应*/
+	/*由于浮动脱离文档流,所以清除浮动满足高度自适应*/
 	overflow: auto;
 	zoom: 1;
 	/*添加最小宽度,防止浏览器伸缩样式混乱*/
