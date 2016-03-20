@@ -1,0 +1,124 @@
+*{
+	margin: 0px;
+	padding: 0px;
+}
+html, body{
+	height: 100%;
+}
+.container{
+	width: 400px;
+	height: 200px;
+	background: #ccc;
+}
+.quarter-radius{
+	width: 100px;
+	height: 100px;
+	border-radius: 50%;
+	background: #fc0;
+	position: relative;
+}
+
+
+/*第一种实现方式,task_1_4_one应用*/
+
+.container{
+	margin: auto;
+	position: absolute; 
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	bottom: 0px;
+	overflow: hidden;
+}
+.quarter-radius:nth-child(1){
+	left: -50px;
+	top: -50px;
+}
+.quarter-radius:nth-child(2){
+	left: 350px;
+	bottom: -50px;
+}
+
+
+/*第二种实现方式,兼容性差
+	注意：
+	justify-content: center;
+	设置主轴的居中方式,这里也就是横向的居中方式
+	align-items: center;
+	设置交叉轴的居中方式,这里也就是纵向的居中方式
+*/
+
+/*
+body{
+	display: flex;
+	justify-content: center; 
+	align-items: center; 
+}
+.container{
+	overflow: hidden;
+}
+.quarter-radius:nth-child(1){
+	left: -50px;
+	top: -50px;
+}
+.quarter-radius:nth-child(2){
+	left: 350px;
+	bottom: -50px;
+}*/
+
+
+/*第三种实现方式,也是大家普遍使用的一种方式*/
+
+/*body{
+	position: relative;
+}
+.container{
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin: -100px 0px 0px -200px;
+	overflow: hidden;
+}
+.quarter-radius:nth-child(1){
+	left: -50px;
+	top: -50px;
+}
+.quarter-radius:nth-child(2){
+	left: 350px;
+	bottom: -50px;
+}*/
+
+
+/*第四种实现方式*/
+
+/*.container{
+	position: relative;
+	top: 50%;
+	margin: -100px auto 0px;
+	overflow: hidden;
+}
+.quarter-radius:nth-child(1){
+	left: -50px;
+	top: -50px;
+}
+.quarter-radius:nth-child(2){
+	left: 350px;
+	bottom: -50px;
+}*/
+
+/*第五种实现方式*/
+/*.container{
+	position: relative;
+	top: 50%;
+	margin: 0 auto;
+	transform: translateY(-50%);
+	overflow: hidden;
+}
+.quarter-radius:nth-child(1){
+	left: -50px;
+	top: -50px;
+}
+.quarter-radius:nth-child(2){
+	left: 350px;
+	bottom: -50px;
+}*/
