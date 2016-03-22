@@ -103,21 +103,22 @@ CancelQueue.throwError = function () {
 CancelQueue.publicInQueue = {
 	left: {
 		inArr: function (num) {
-			CancelQueue.throwError();
+			console.log(this);
+			CancelQueue.throwError.call(this);
 			this.arr.unshift(+num);
 		},
 		inDom: function (num) {
-			CancelQueue.throwError();
+			CancelQueue.throwError.call(this);
 			this.container.insertBefore(this.burnDom(num), this.container.childNodes[0]);
 		}
 	},
 	right: {
 		inArr: function (num) {
-			CancelQueue.throwError();
+			CancelQueue.throwError.call(this);
 			this.arr.push(+num);
 		},
 		inDom: function (num) {
-			CancelQueue.throwError();
+			CancelQueue.throwError.call(this);
 			this.container.appendChild(this.burnDom(num));
 		}
 	}
@@ -130,21 +131,21 @@ CancelQueue.publicInQueue = {
 CancelQueue.publicOutQueue = {
 	left: {
 		outArr: function (num) {
-			CancelQueue.throwError();
+			CancelQueue.throwError.call(this);
 			alert(this.arr.shift());
 		},
 		outDom: function (num) {
-			CancelQueue.throwError();
+			CancelQueue.throwError.call(this);
 			this.container.removeChild(this.container.firstElementChild);
 		}
 	},
 	right: {
 		outArr: function (num) {
-			CancelQueue.throwError();
+			CancelQueue.throwError.call(this);
 			alert(this.arr.pop());
 		},
 		outDom: function (num) {
-			CancelQueue.throwError();
+			CancelQueue.throwError.call(this);
 			this.container.removeChild(this.container.lastElementChild);
 		}
 	}
