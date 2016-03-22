@@ -20,7 +20,6 @@ var CancelQueue = function (obj) {
 	this.arr = [];
 	this.update = function () {
 		var childs = this.container.childNodes;
-		console.log(childs);
 		for (var i = 0, len = this.arr.length; i < len; i++) {
 			childs[i].setAttribute("data-index", i);
 		}
@@ -103,7 +102,6 @@ CancelQueue.throwError = function () {
 CancelQueue.publicInQueue = {
 	left: {
 		inArr: function (num) {
-			console.log(this);
 			CancelQueue.throwError.call(this);
 			this.arr.unshift(+num);
 		},
