@@ -1,0 +1,39 @@
+*{
+	margin: 0px;
+	padding: 0px;
+}
+.container{
+	height: 500px;
+	min-width: 500px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-wrap: wrap;
+	padding: 20px;
+}
+.container div{
+	width: 150px;
+}
+.one,
+.two, 
+.three{
+	border: 1px solid #f00;
+}
+.one{
+	height: 120px;
+}
+.two{
+	height: 100px;
+}
+.three{
+	height: 40px;
+}
+.four{
+	height: 200px;
+	border: 1px solid blue;
+}
+@media only screen and (max-width: 640px) {
+	.four{
+		order: -1;
+	}
+}
