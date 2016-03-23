@@ -3,14 +3,14 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="author" content="zp" />
-		<title>任务十九</title>
+		<title>任务二十</title>
 		<style type="text/css">
 			#button-area{
 				display: inline-block;			
 			}
 			#arr-area span {
 				display: inline-block;
-				width: 30px;
+				padding: 0px 10px;
 				height: 30px;
 				line-height: 30px;
 				text-align: center;
@@ -19,37 +19,24 @@
 				margin: 10px;
 				cursor: pointer;
 			}
-			#arr-sort{
-				width: 800px;
-				height: 500px;
-				position: fixed;
-				bottom: 0px;
-				left: 200px;
-			}
-			#arr-sort span{
-				width: 10px;
-				background: red;
-				vertical-align: bottom;
-				position: absolute;
-				bottom: 0px;
-			}
-			button{
-				cursor: pointer;
+			textarea{
+				width: 200px;
+				height: 200px;
+				display: block;
+				margin-bottom: 20px;
 			}
 		</style>
 	</head>
 	<body>
-		<input type="text" id="new-number" />
+		<textarea id="text"></textarea>
 		<div id="button-area">
 			<button id="left-in">左侧入</button>
 			<button id="right-in">右侧入</button>
 			<button id="left-out">左侧出</button>
 			<button id="right-out">右侧出</button>
-			<button id="shuffle">生成25个随机数(仅是顺序被打乱)</button>	
-			<button id="sort">排序</button>
+			<strong>以英文逗号分隔</strong>
 		</div>
 		<div id="arr-area"></div>
-		<div id="arr-sort"></div>
-		<script type="text/javascript" src="task_2_19.js"></script>
+		<script type="text/javascript" src="task_2_20.js"></script>
 	</body>
 </html>
