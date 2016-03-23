@@ -23,20 +23,29 @@
 				width: 200px;
 				height: 200px;
 				display: block;
+				padding: 5px;
 				margin-bottom: 20px;
+			}
+			#search-text{
+				padding: 0px 5px;
+				width: 200px;
+				height: 30px;
+				line-height: 30px;
 			}
 		</style>
 	</head>
 	<body>
-		<textarea id="text"></textarea>
+		<textarea id="text" onclick="this.select();">输入内容以英文逗号分隔</textarea>
+		<input type="text" id="search-text" placeholder="请输入查询关键字" />
 		<div id="button-area">
+			<button id="search">查询</button>
 			<button id="left-in">左侧入</button>
 			<button id="right-in">右侧入</button>
 			<button id="left-out">左侧出</button>
 			<button id="right-out">右侧出</button>
-			<strong>以英文逗号分隔</strong>
 		</div>
 		<div id="arr-area"></div>
+
 		<script type="text/javascript" src="task_2_20.js"></script>
 	</body>
 </html>

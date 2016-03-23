@@ -17,6 +17,7 @@ var CancelQueue = function (obj) {
 	obj = obj || {};
 	this.input = obj.input || $("new-number");
 	this.container = obj.container || $("arr-area");
+	this.searchInput = obj.search || $("search-text");
 	this.arr = [];
 	this.update = function () {
 		var childs = this.container.childNodes;
@@ -53,6 +54,22 @@ var CancelQueue = function (obj) {
 			}
 		};
 	};
+	this.search = function () {
+		if (this.searchInput.value === "") {
+			alert("请输入需要查询内容");
+			return void 0;
+		}
+		var pattern = new RegExp(this.searchInput.value),
+			childs = this.container.childNodes;
+		this.searchInput.value = "";
+		this.arr.forEach(function (val, index) {
+			if (pattern.test(val)) {
+				childs[index].style.background = "green";
+			} else {
+				childs[index].style.background = "red";
+			}
+		});
+	}
 };
 CancelQueue.fn = CancelQueue.prototype;
 /**
@@ -164,5 +181,8 @@ CancelQueue.publicOutQueue = {
 	};
 	$("right-out").onclick = function () {
 		test.outQueue("right");
+	};
+	$("search").onclick = function () {
+		test.search();
 	};
 })();
