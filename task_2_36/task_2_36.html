@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="author" content="zp" />
+		<title>听话的小方块</title>
+		<style type="text/css">
+			*{
+				margin: 0px;
+				padding: 0px;
+			}
+			.cin-area{
+				margin: 200px 200px;
+				height: 506px;
+				overflow: hidden;
+			}
+			#label-area{
+				float: left;
+				width: 20px;
+				font-size: 20px;
+				background: #171515;
+				color: #fff;
+				min-height: 506px;
+				text-align: center;
+				position: relative;
+			}
+			#label-area div{
+				margin-top: 1px;
+				height: 22px;
+				line-height: 22px;
+			}
+			#commands{
+				width: 200px;
+				height: 504px;
+				font-size: 20px;
+				font-weight: bold;
+				background: #171515;
+				color: #3AB33A;
+				outline: none;
+				border: 1px solid #000;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="cin-area">
+			<div id="label-area">
+				<div>1</div>
+			</div>
+			<textarea id="commands"></textarea>
+		</div>
+	</body>
+	<script type="text/javascript" src="require.js" data-main="main.js"></script>
+</html>
