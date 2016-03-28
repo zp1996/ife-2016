@@ -20,6 +20,7 @@ define(["common"], function ($) {
 		this.commands = options.commands || [];
 		this.labels = Cinarea.burnLabel(this.commands.length, Cinarea.paint, this.label_area, true);
 		this.insert.call(this);
+		this.scroll.call(this);
 	};
 	/**
 	 * 重绘label
@@ -93,6 +94,18 @@ define(["common"], function ($) {
 			if (event.keyCode === 13 || event.keyCode === 8) {
 				self.update(this.value.split("\n"));
 			}
+		};	
+	};
+	/**
+	 * 滑动textarea
+	 * @param  null
+	 * @return void 0
+	 * @zp
+	 */
+	Cinarea.fn.scroll = function () {
+		var self = this;
+		this.textarea.onscroll = function () {
+			Cinarea.prePaint.sport.call(self, Infinity);
 		};	
 	};
 	/**
