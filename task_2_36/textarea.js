@@ -43,7 +43,7 @@ define(["common"], function ($) {
 							 element.innerHTML = "";
 				element.appendChild(cacheElement);
 				cacheElement = document.createDocumentFragment();
-				Cinarea.prePaint.reset.call(self, number);
+				Cinarea.prePaint.reset.call(self);
 				Cinarea.prePaint.sport.call(self, number);
 			}
 		};
@@ -94,7 +94,7 @@ define(["common"], function ($) {
 			if (event.keyCode === 13 || event.keyCode === 8) {
 				self.update(this.value.split("\n"));
 			}
-		};	
+		};
 	};
 	/**
 	 * 滑动textarea
@@ -105,7 +105,7 @@ define(["common"], function ($) {
 	Cinarea.fn.scroll = function () {
 		var self = this;
 		this.textarea.onscroll = function () {
-			Cinarea.prePaint.sport.call(self, Infinity);
+			Cinarea.prePaint.sport.call(self, Infinity);				
 		};	
 	};
 	/**

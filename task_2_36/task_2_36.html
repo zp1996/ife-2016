@@ -8,10 +8,19 @@
 				margin: 0px;
 				padding: 0px;
 			}
+			html, body{
+				min-width: 100%;
+				min-height: 100%;
+			}
 			.cin-area{
-				margin: 200px 200px;
 				height: 506px;
 				overflow: hidden;
+				position: absolute;
+				left: 730px;
+				top: 150px;
+			}
+			.main-area{
+				position: relative;
 			}
 			#label-area{
 				float: left;
@@ -38,14 +47,73 @@
 				outline: none;
 				border: 1px solid #000;
 			}
+			#chess{
+				width: 30px;
+				height: 30px;
+				position: absolute;
+				left: 308px;
+				top: 308px;
+				transform: rotate(0.1deg);
+			}
+			.head{
+				background: blue;
+				height: 10px;
+			}
+			.body{
+				background: red;
+				height: 20px;
+			}
+			.main-area{
+				position: absolute;
+				left: 50px;
+				top: 120px;
+			}
+			#boxs{
+				border-collapse:collapse;
+			}
+			.box{
+				width: 30px;
+				height: 30px;
+				border: 1px solid #bdc3c7;
+				text-align: center;
+				margin: -1px 0px 0px -1px;
+				float: left;
+				line-height: 30px;
+				font-weight: 600;
+				color: #333;
+			}
+			.col>.box:nth-child(1) {
+				border: none;
+			}
+			#title .box{
+				width: 32px;
+				border: none;
+			}
 		</style>
 	</head>
 	<body>
+		<article class="main-area">
+			<table id="boxs">
+				<tbody>
+					<tr class="col" id="title">
+						<td class="box"></td>
+					</tr>
+				</tbody>
+			</table>
+			<div id="chess">
+				<div class="head"></div>
+				<div class="body"></div>
+			</div>
+		</article>
 		<div class="cin-area">
 			<div id="label-area">
 				<div>1</div>
 			</div>
 			<textarea id="commands"></textarea>
+		</div>
+		<div class="button-area">
+			<button id="run">执行</button>
+			<button id="turn">转向</button>
 		</div>
 	</body>
 	<script type="text/javascript" src="require.js" data-main="main.js"></script>
