@@ -21,10 +21,22 @@ define(["chessman", "common"], function (Chess, $) {
 		this.build.call(this, this.volume);
 		this.posChess.call(this);
 	};
+	/*
+	 * 定位棋子
+	 * @param  null
+	 * @return void 0
+	 * @zp
+	 */
 	Board.fn.posChess = function () {
 		this.chess.element.style.left = (this.chess.position.x - 1) * 31 + 29 + "px";
 		this.chess.element.style.top = (this.chess.position.y - 1) * 31 + 29 + "px";
 	};
+	/*
+	 * 修建表格
+	 * @param  null
+	 * @return void 0
+	 * @zp
+	 */
 	Board.fn.build = function (num) {
 		var cacheElement = document.createDocumentFragment(),
 			tr,
@@ -46,6 +58,12 @@ define(["chessman", "common"], function (Chess, $) {
 		}
 		this.boxs.appendChild(cacheElement);
 	};
+	/*
+	 * 创建表格头
+	 * @param  null
+	 * @return void 0
+	 * @zp
+	 */
 	Board.fn.buildTitle = function (num) {
 		var cacheElement = document.createDocumentFragment(),
 			td,

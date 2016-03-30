@@ -15,15 +15,7 @@ define(["common"], function ($) {
 		};
 		this.changeDirection = function (dir) {
 			this.direction = dir;
-			this.sureClassName.call(this);
 		};
-		this.init.call(this);
-	};
-	ChessMan.prototype.sureClassName = function () {
-		this.element.className = this.direction;
-	};
-	ChessMan.prototype.init = function () {
-		this.sureClassName.call(this);
 	};
 	return ChessMan;
 });
