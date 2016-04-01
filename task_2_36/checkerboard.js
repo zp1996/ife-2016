@@ -1,4 +1,4 @@
-define(["chessman", "common"], function (Chess, $) {
+define(["chessman", "common", "strategies"], function (Chess, $, s) {
 	/**
 	 * 棋盘构造函数
 	 * @param  {棋子元素,方向,位置}
@@ -76,6 +76,29 @@ define(["chessman", "common"], function (Chess, $) {
 			cacheElement.appendChild(td);
 		}
 		this.titleArea.appendChild(cacheElement);	
+	};
+	Board.fn.run = function (undefined) {
+		console.log(1);
+		var i = 0,
+			self = this,
+			flag = {
+				flag: undefined,
+			},
+			cmds =  this.commands,
+			len = cmds.length,
+			runs = cmds.map(function (val, i) {
+				return function () {
+					s[val['cmd']].call(self, self, val, flag);
+				};
+			}),
+			timer = setInterval(function () {
+				if (flag.flag || i === len) {
+					clearInterval(timer);
+					timer = null;
+					return void 0;
+				}
+				runs[i++]();
+			}, 1200);
 	};
 	return Board;
 });

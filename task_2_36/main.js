@@ -2,11 +2,13 @@ require(["common", "textarea", "checkerboard", "strategies"], function ($, Cinar
 	var area = new Cinarea(),
 		board = new Board();
 	var index = 0;
-	$("#turn").onclick = function () {
-		var arr = [-90, 90, 360, 180];
-		$.turn(board.chess.element, arr[index++ % 4]);
-	};
-	$("#run1").onclick = function () {
-		s.tralef(board);
+	$("#run").onclick = function () {
+		var commands = area.textarea.value.split("\n");
+		commands = $.filter(commands);
+		for (var i = 0, len = commands.length; i < len; i++) {
+			commands[i] = $.cancelCmd(commands[i]);
+		}
+		board.commands = commands;
+		board.run();
 	};
 });

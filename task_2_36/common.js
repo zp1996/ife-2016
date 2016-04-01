@@ -67,6 +67,7 @@ define([], function () {
 	 * @zp
 	 */
 	$.run = function (ele, pos, dir) {
+		console.log(pos);
 		var 
 			strategies = {
 				vertical: {
@@ -169,6 +170,11 @@ define([], function () {
 		return operation[cmd.cmd][board.chess.direction] ? 
 					 operation[cmd.cmd][board.chess.direction]() : 
 					 operation[cmd.cmd]();
+	};
+	$.filter = function (arr) {
+		return arr.filter(function (val) {
+			return val;
+		});
 	};
 	return $;
 });
