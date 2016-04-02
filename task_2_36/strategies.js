@@ -6,7 +6,7 @@ define(["common"], function ($) {
 	 * @zp
 	 */
 	var strategies = {
-		go: function (ele, cmd) {
+		go: function (ele, cmd, flag) {
 			var pos = $.pos(ele, cmd),
 				dir = ele.chess.direction, 
 				vp = (dir === "left" || dir === "right") ? "plane" : "vertical";
@@ -14,21 +14,21 @@ define(["common"], function ($) {
 				$.run(ele.chess.element, pos, vp);
 				ele.chess.position = pos;
 			} else {
-				alert("越界了");
-				return true;
+				alert("越界了,指令不在执行");
+				flag.flag = true;
 			}
 		},
-		tralef: function (ele, cmd) {
+		tralef: function (ele, cmd, flag) {
 			var pos = $.pos(ele, cmd);
 			if (pos) {
 				$.run(ele.chess.element, pos, "plane");
 				ele.chess.position = pos;
 			} else {
-				alert("越界了");
-				return true;
+				alert("越界了,指令不在执行");
+				flag.flag = true;
 			}
 		},
-		movlef: function (ele, cmd) {
+		movlef: function (ele, cmd, flag) {
 			$.turn(ele.chess.element, -90);
 			ele.chess.direction = "left";
 			setTimeout(function () {
@@ -37,23 +37,22 @@ define(["common"], function ($) {
 					$.run(ele.chess.element, pos, "plane");
 					ele.chess.position = pos;
 				} else {
-					alert("越界了");
-					console.error("nihao");
-					return true;
+					alert("越界了,指令不在执行");
+					flag.flag = true;
 				}
 			}, 500); 
 		},
-		trarig: function (ele, cmd) {
+		trarig: function (ele, cmd, flag) {
 			var pos = $.pos(ele, cmd);
 			if (pos) {
 				$.run(ele.chess.element, pos, "plane");
 				ele.chess.position = pos;
 			} else {
-				alert("越界了");
-				return true;
+				alert("越界了,指令不在执行");
+				flag.flag = true;
 			}
 		},
-		movrig: function (ele, cmd) {
+		movrig: function (ele, cmd, flag) {
 			$.turn(ele.chess.element, 90);
 			ele.chess.direction = "right";
 			setTimeout(function () {
@@ -62,22 +61,22 @@ define(["common"], function ($) {
 					$.run(ele.chess.element, pos, "plane");
 					ele.chess.position = pos;
 				} else {
-					alert("越界了");
-					return true;
+					alert("越界了,指令不在执行");
+					flag.flag = true;
 				}
 			}, 500); 
 		},
-		tratop: function (ele, cmd) {
+		tratop: function (ele, cmd, flag) {
 			var pos = $.pos(ele, cmd);
 			if (pos) {
 				$.run(ele.chess.element, pos, "vertical");
 				ele.chess.position = pos;
 			} else {
-				alert("越界了");
-				return true;
+				alert("越界了,指令不在执行");
+				flag.flag = true;
 			}
 		},
-		movtop: function (ele, cmd) {
+		movtop: function (ele, cmd, flag) {
 			$.turn(ele.chess.element, 360);
 			ele.chess.direction = "top";
 			setTimeout(function () {
@@ -86,8 +85,8 @@ define(["common"], function ($) {
 					$.run(ele.chess.element, pos, "vertical");
 					ele.chess.position = pos;
 				} else {
-					alert("越界了");
-					return true;
+					alert("越界了,指令不在执行");
+					flag.flag = true;
 				}
 			}, 500); 
 		},
@@ -97,7 +96,7 @@ define(["common"], function ($) {
 				$.run(ele.chess.element, pos, "vertical");
 				ele.chess.position = pos;
 			} else {
-				alert("越界了");
+				alert("越界了,指令不在执行");
 				flag.flag = true;
 			}
 		},
@@ -110,7 +109,7 @@ define(["common"], function ($) {
 					$.run(ele.chess.element, pos, "vertical");
 					ele.chess.position = pos;
 				} else {
-					alert("越界了");
+					alert("越界了,指令不在执行");
 					flag.flag = true;
 				}
 			}, 500); 

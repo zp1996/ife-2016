@@ -171,9 +171,14 @@ define([], function () {
 					 operation[cmd.cmd][board.chess.direction]() : 
 					 operation[cmd.cmd]();
 	};
-	$.filter = function (arr) {
-		return arr.filter(function (val) {
-			return val;
+	$.filter = function (arr, label) {
+		return arr.filter(function (val, i) {
+			if (val) {
+				return val;				
+			} else {
+				label = label.getElementsByTagName("div");
+				label[i].style.background = "red";
+			}
 		});
 	};
 	return $;

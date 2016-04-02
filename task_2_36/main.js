@@ -4,7 +4,7 @@ require(["common", "textarea", "checkerboard", "strategies"], function ($, Cinar
 	var index = 0;
 	$("#run").onclick = function () {
 		var commands = area.textarea.value.split("\n");
-		commands = $.filter(commands);
+		commands = $.filter(commands, area.label_area);
 		for (var i = 0, len = commands.length; i < len; i++) {
 			commands[i] = $.cancelCmd(commands[i]);
 		}

@@ -77,8 +77,13 @@ define(["chessman", "common", "strategies"], function (Chess, $, s) {
 		}
 		this.titleArea.appendChild(cacheElement);	
 	};
+	/*
+	 * 执行命令
+	 * @param  null
+	 * @return void 0
+	 * @zp
+	 */
 	Board.fn.run = function (undefined) {
-		console.log(1);
 		var i = 0,
 			self = this,
 			flag = {
