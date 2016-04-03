@@ -71,10 +71,9 @@ var SortSuccess = {
 	all: function () {
 		var spans = this.sortArea.childNodes;
 		for (var i = 0, item; item = spans[i++];) {
-			console.log(item);
 			item.style.background = "green";
-			alert("排序完成!!!");
 		}
+		alert("排序完成");
 	},
 	unique: function (i) {
 		this.sortArea.childNodes[i].style.background = "green";
