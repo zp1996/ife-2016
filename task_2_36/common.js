@@ -67,7 +67,6 @@ define([], function () {
 	 * @zp
 	 */
 	$.run = function (ele, pos, dir) {
-		console.log(pos);
 		var 
 			strategies = {
 				vertical: {

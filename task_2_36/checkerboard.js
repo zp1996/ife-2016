@@ -93,7 +93,11 @@ define(["chessman", "common", "strategies"], function (Chess, $, s) {
 			len = cmds.length,
 			runs = cmds.map(function (val, i) {
 				return function () {
-					s[val['cmd']].call(self, self, val, flag);
+					if ( s.hasOwnProperty(val['cmd']) ) {
+						s[val['cmd']].call(self, self, val, flag);
+					} else {
+						alert(val['cmd'] + "指令出现错误,程序跳过该指令" + i);
+					}
 				};
 			}),
 			timer = setInterval(function () {
