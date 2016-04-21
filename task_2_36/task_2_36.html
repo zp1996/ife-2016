@@ -71,6 +71,7 @@
 			}
 			#boxs{
 				border-collapse:collapse;
+				cursor: pointer;
 			}
 			.box{
 				width: 30px;
@@ -93,18 +94,27 @@
 			.button-area{
 				position: absolute;
 				left: 1000px;
-				top: 200px;
+				top: 200px;  
 			}
-			#run{
+			#run, #build-wall, #target, #find{
 				border: none;
 				background: green;
 				padding: 10px;
+				margin-top: 20px;
 				cursor: pointer;
 				color: #fff;
+			}
+			#target-pos{
+				width: 140px;
+				height: 30px;
+				line-height: 30px;
+				padding-left: 5px;
+				outline: none;
 			}
 		</style>
 	</head>
 	<body>
+		<h3>点击地图白色背景一点即可确定目标位置,或者修墙;点击淡红色点即可取消该点的墙,目标位置只能确定一次</h3>
 		<article class="main-area">
 			<table id="boxs">
 				<tbody>
@@ -126,6 +136,10 @@
 		</div>
 		<div class="button-area">
 			<button id="run">执行</button>
+			<button id="build-wall">随机修墙</button>
+			<input type="text" placeholder="输入目标位置,如：1-2" id="target-pos" />
+			<button id="target">确定目标位置</button>
+			<button id="find">寻路</button>
 		</div>
 	</body>
 	<script type="text/javascript" src="require.js" data-main="main.js"></script>
