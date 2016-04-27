@@ -1,0 +1,92 @@
+html, body{
+	height: 100%;
+}
+#mask{
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.4);
+	position: fixed;
+	z-index: 10000;
+	top: 0px;
+	display: none;
+}
+#wrapper, #other-main{
+	position: fixed;
+	z-index: 20000;
+	cursor: move;
+	background: #fff;
+	box-shadow: 0px 5px 10px rgba(10, 0, 0, 0.7);
+}
+#wrapper{
+	display: none;
+}
+.layer-header{
+	font-family: "Microsoft YaHei";
+	width: 100%;
+	height: 45px;
+	background: #F8F8F8;
+	border-bottom: 1px solid #aaa;
+	line-height: 45px;
+	text-indent: 5px;
+}
+[id|=close-btn]{
+	cursor: pointer;
+	float: right;
+	margin-right: 10px;
+	font-size: 24px;
+	color: #aaa;
+}
+#close-btn:hover{
+	color: #717171;
+}
+.header-title{
+	color: #5A5A5A;
+	font-weight: bold;
+	font-size: 18px;
+}
+.layer-button-area{
+	width: 100%;
+	height: 45px;
+	position: absolute;
+	bottom: 0px;
+	border-top: 1px solid #aaa;
+}
+[id|=layer-yes], [id|=layer-no]{
+	padding: 8px 20px;
+	border-radius: 8px;
+	border: none;
+	outline: none;
+	margin-right: 20px;
+	font-size: 16px;
+	float: right;
+	margin-top: 5px;
+}
+[id|=layer-no]{
+	background: #f1f1f1; 
+	border: 1px #dedede solid;
+	color: #333;
+}
+[id|=layer-yes]{
+	background: #2e8ded;
+	color: #fff;
+}
+[id|=layer-yes]:hover{
+	background: #346C9C;
+}
+[id|=layer-no]:hover{
+	background: #D4D4D4;
+}
+.layer-content-main{
+	margin-top: 50px;
+	text-align: center;
+	font-weight: bold;
+	font-size: 16px;
+}
+.layer-prompt-input{
+	width: 80%;
+	height: 30px;
+	line-height: 30px;
+	margin: 40px 10%;
+	outline: none;
+}
+
