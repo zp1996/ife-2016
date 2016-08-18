@@ -1,4 +1,4 @@
-define(["common"], function ($) {
+define(["util"], function ($) {
 	/**
 	 * 拖拽函数
 	 * @param  object

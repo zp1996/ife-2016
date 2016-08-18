@@ -1,4 +1,4 @@
-define(["common", "drag"], function ($, Drag) {
+define(["util", "drag"], function ($, Drag) {
 	/**
 	 * 弹出层
 	 * @param  object 配置项
@@ -13,8 +13,8 @@ define(["common", "drag"], function ($, Drag) {
 		this.config = {
 			width: obj.width || 500,
 			height: obj.height || 300,
-			content: "<h3>给点内容吧还是！</h3>",
-			title: "弹出层",
+			content: obj.content || "<h3>给点内容吧还是！</h3>",
+			title: obj.title || "弹出层",
 			btns: ["确定", "取消"]
 		};
 		$.extend(this.config,	{
@@ -175,7 +175,7 @@ define(["common", "drag"], function ($, Drag) {
 	 * @return void 0
 	 * @zp
 	 */ 
-	Layer.fn.burnWrapper = function (obj) {
+	Layer.fn.burnWrapper = function () {
 		var header = this.burnHeader(this.config.title),
 			main = this.burnBtnArea(this.config.btns, 2), 
 			html = header.html;
@@ -252,15 +252,21 @@ define(["common", "drag"], function ($, Drag) {
 		fuc = fuc.after(Layer.fn.closeBtn, this);
 		fuc = fuc.after(Layer.animateStrategies[this.animateType]);
 		Layer.fn.burnOtherContainer = fn;
-		Layer.fn.open = function (callback) {
+
+		Layer.fn.open = function (obj) {
 			fuc({
 				fn: _self.drag.bind(_self),
 				config: this.config
 			});
-			_self.registerEvent({
-				yes: "#layer-yes", 
-				no:"#layer-no"
-			}, callback);
+			return new Promise(function (resolve, reject) {
+				_self.registerEvent({
+					yes: "#layer-yes", 
+					no:"#layer-no"
+				}, {
+					yes: resolve,
+					no: reject
+				});
+			});
 		}
 	};
 	/**
@@ -313,7 +319,7 @@ define(["common", "drag"], function ($, Drag) {
 				yes: "#layer-yes-alert"
 			}
 		});
-		this.otherCommon.call(this, obj);
+		return this.otherCommon.call(this, obj, true);
 	};
 	/**
 	 * confirm弹窗
@@ -323,14 +329,16 @@ define(["common", "drag"], function ($, Drag) {
 	 */
 	Layer.fn.confirm = function (obj) {
 		obj = obj || {};
-		obj.len = 2;
-		obj.btns = ["确定", "取消"];
-		obj.type = "-confirm";
-		obj.ids = {
-			yes: "#layer-yes-confirm",
-			no: "#layer-no-confirm"
-		};
-		this.otherCommon.call(this, obj);
+		$.extend(obj, {
+			len: 2,
+			btns: ["确定", "取消"],
+			type: "-confirm",
+			ids: {
+				yes: "#layer-yes-confirm",
+				no: "#layer-no-confirm"
+			}
+		});
+		return this.otherCommon.call(this, obj);
 	};
 	/**
 	 * prompt弹窗
@@ -340,15 +348,17 @@ define(["common", "drag"], function ($, Drag) {
 	 */
 	Layer.fn.prompt = function (obj) {
 		obj = obj || {};
-		obj.len = 2;
-		obj.btns = ["确定", "取消"];
-		obj.type = "-prompt";
-		obj.html = "<input type='text' class='layer-prompt-input' />",
-		obj.ids = {
-			yes: "#layer-yes-prompt",
-			no: "#layer-no-prompt"
-		};
-		this.otherCommon.call(this, obj);
+		$.extend(obj, {
+			len: 2,
+			btns: ["确定", "取消"],
+			type: "-prompt",
+			html: "<input type='text' class='layer-prompt-input' />",
+			ids: {
+				yes: "#layer-yes-prompt",
+				no: "#layer-no-prompt"
+			}
+		});
+		return this.otherCommon.call(this, obj);
 	};
 	/**
 	 * 其它类型公共函数
@@ -356,7 +366,7 @@ define(["common", "drag"], function ($, Drag) {
 	 * @return void 0
 	 * @zp
 	 */
-	Layer.fn.otherCommon = function (obj) {
+	Layer.fn.otherCommon = function (obj, flag) {
 		var header = this.burnHeader(obj.title || "弹窗", obj.type),
 			btns = this.burnBtnArea(obj.btns, obj.len,  obj.type),
 			html = header.html,
@@ -371,7 +381,13 @@ define(["common", "drag"], function ($, Drag) {
 		$(header.id).onclick = function () {
 			_self.close();
 		};
-		_self.registerEvent(obj.ids, obj.callback);
+		// 返回promise对象,避免回调地狱出现
+		return new Promise(function (resolve, reject) {
+			_self.registerEvent(obj.ids, {
+				yes: resolve, 
+				no: reject
+			});
+		});
 	};
 	return Layer;
 });
