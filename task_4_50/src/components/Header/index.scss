@@ -1,5 +1,16 @@
-header {
+@charset 'utf-8';
+$class-prefix: 'header';
+
+.#{$class-prefix} {
 	@include lh-equal-h($header-height);
 	background: $active-color;
 	color: $active-font-color;
+	font-size: $font-size-base;
+}
+.#{$class-prefix}-title {
+	font-size: $font-size-big;
+	margin: 0px 80px;
+	i {
+		margin-right: 5px;
+	}
 }
