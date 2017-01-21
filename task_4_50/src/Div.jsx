@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router'; 
 
 class Div extends Component {
 	constructor(props) {
@@ -8,7 +9,8 @@ class Div extends Component {
 		return (
 			<div>
 				<p>Hello World!</p>
-				<a href='/test'>link to test</a>
+				<i className='icon-question-sign'></i>
+				<Link to='/test'>link to test</Link>
 			</div>
 		);
 	}

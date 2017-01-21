@@ -1,0 +1,5 @@
+@charset 'utf-8';
+@mixin lh-equal-h($h) {
+	height: $h;
+	line-height: $h;
+}

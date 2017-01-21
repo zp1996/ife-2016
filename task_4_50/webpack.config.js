@@ -42,7 +42,10 @@ module.exports = {
         }, {
             test: /\.scss$/,
             exclude: /node_modules/,
-            loader: ExtractTextPlugin.extract('style', 'css!postcss!sass')
+            loader: ExtractTextPlugin.extract('style', 'css!postcss!resolve-url!sass')
+        }, {
+            test: /\.(gif|jpg|png)$/,
+            loader: 'url-loader?limit=8192&name=[name].[ext]'
         }]
     },
     resolve: {
