@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from './Button';
+import Button from './components/Button/index';
 import { Link } from 'react-router'; 
 
 function handleClick() {
@@ -11,6 +11,6 @@ const Test = () => (
 		<Button text='Click' handleClick={handleClick} />
 		<Link to='/'>回首页</Link>
 	</div>
-);
+); 
 
 export default Test;

@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import config from './config';
+import item from './item'; 
 	
 const data = combineReducers({
-	header: config.header
+	item
 });
 
 export default data;

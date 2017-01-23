@@ -1,18 +1,17 @@
 @charset "utf-8";
 
 $active-color: #FC6600;
-$border-color: #666;
-$font-color: #666;
+$border-color: #B9B4B4;
+$font-color: #B9B4B4;
 $active-font-color: #fff;
 
 $body-background: #EFEFEF;
 $mask-background: #8f8f8f;
-
-$fa-font-path: "/font";
-$fa-var-question-circle: "\f059";
 
 $header-height: 40px;
 
 $font-size-base: 14px;
 $font-size-big: 20px;
 $font-size-small: 12px;
+
+$border-base: 1px solid $border-color;

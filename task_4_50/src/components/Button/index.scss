@@ -1,0 +1,17 @@
+@charset 'utf-8';
+
+$class-prefix: 'button';
+
+.#{$class-prefix} {
+	text-align: center;
+	background: #fff;
+	border: $border-base;
+	cursor: pointer;
+	margin: 50px;
+}
+.#{$class-prefix}-active {
+	background: $active-color;
+}
+.#{$class-prefix}-fixed-width {
+	width: 62px;
+}

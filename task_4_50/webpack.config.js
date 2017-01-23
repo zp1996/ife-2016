@@ -26,6 +26,7 @@ module.exports = {
             "redux",
             "react-router",
             "react-router-redux",
+            "classnames"
         ]
     },
     devtool: isProduction ? '' : 'cheap-module-eval-source-map',  // 生产环境中用
