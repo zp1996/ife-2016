@@ -8,8 +8,8 @@ import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
 import config from './config';
 import reducer from './reducers/index';
 
-import Div from './div';
-import Test from './containers/index';
+import Index from './containers/index';
+import DataQuestion from './containers/Question';
 import Header from './components/Header/index';
 
 import styles from './index.scss';
@@ -21,12 +21,10 @@ render(
 		<div>
 			<Header data={config.header} />
 			<Router history={browserHistory}>
-				<Route path="/" component={Div} />
-				<Route path="/test" component={Test} />
+				<Route path="/" component={Index} />
+				<Route path="/add-question" component={DataQuestion} />
 			</Router>
 		</div>
 	</Provider>,
 	document.getElementById('root')
 );
-
-console.log('success, so nice!');

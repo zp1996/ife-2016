@@ -1,5 +1,4 @@
-import utils from '../utils';
-
-export const addQuestion = () => ({
-	
+export const addQuestion = (type) => ({
+	type: 'ADD_QUESTION',
+	question_type: type
 });

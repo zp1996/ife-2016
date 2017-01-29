@@ -17,7 +17,7 @@ const Button = ({ handleClick, text, isActive, isFixed }) => {
 };
 
 Button.propTypes = {
-	handleClick: PropTypes.func,
+	handleClick: PropTypes.func.isRequired,
 	text: PropTypes.string.isRequired,
 	isActive: PropTypes.bool,
 	isFixed: PropTypes.bool

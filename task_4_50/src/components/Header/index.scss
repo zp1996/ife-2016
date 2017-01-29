@@ -14,3 +14,12 @@ $class-prefix: 'header';
 		margin-right: 5px;
 	}
 }
+.sm-title {
+	display: inline-block;
+	position: relative;
+	top: -2px;
+	padding: 0px 10px;
+	&:hover {
+		background: darken($active-color, 10%);
+	}
+}

@@ -5,3 +5,68 @@ body {
 	font-color: $font-color;
 	background: $body-background;
 }
+@mixin index-container {
+	box-sizing: border-box;
+	width: $container-width;
+	margin: 50px auto;
+	background: #fff;
+	box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+}
+.no-index-container {
+	@include index-container;
+	position: relative;
+	height: $container-min-height;
+	.icon-button {
+		width: 160px;
+		border: none;
+		padding: 0px;
+		font-size: $font-size-big;
+		font-weight: 700;
+		font-family: "Microsoft YaHei";
+		@include lh-equal-h(45px);
+		@include center;
+	}
+}
+.question-container {
+	@include index-container;
+	&>div {
+		width: 90%;
+		margin-left: auto;
+		margin-right: auto;
+	}
+}
+.item-title {
+	text-align: center;
+	line-height: 3;
+	padding: 1rem 0px;
+	cursor: pointer;
+	color: #555;
+	border-bottom: $border-base;
+}
+.title:hover {
+	background: $hover-color;
+}
+.add-question-container {
+	margin: 1.5 * $font-size-big auto;
+	border: 1px solid #ccc;
+	cursor: pointer;
+}
+.add-question {
+	@include lh-equal-h(4 * $font-size-big)
+	text-align: center;
+	font-size: $font-size-mid;
+	background: #eee;
+	color: #888;
+	i {
+		margin-right: 10px;
+	}
+}
+.question-type {
+	transition: height 0.3s ease-in-out;
+	overflow: hidden;
+	height: 0px;
+	line-height: 4 * $font-size-big;
+}
+.button-area {
+	border-top: $border-base;
+}

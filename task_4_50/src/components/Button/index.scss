@@ -1,12 +1,12 @@
 @charset 'utf-8';
 
 $class-prefix: 'button';
+$icon-class-prefix: 'icon-button';
 
 .#{$class-prefix} {
 	text-align: center;
-	background: #fff;
+	background: $active-font-color;
 	border: $border-base;
-	cursor: pointer;
 	margin: 50px;
 }
 .#{$class-prefix}-active {
@@ -14,4 +14,13 @@ $class-prefix: 'button';
 }
 .#{$class-prefix}-fixed-width {
 	width: 62px;
+}
+.#{$icon-class-prefix} {
+	color: $active-font-color;
+	i {
+		margin-right: 12px;
+	}
+}
+.#{$icon-class-prefix}-active {
+	@extend .#{$class-prefix}-active;
 }
