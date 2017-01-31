@@ -1,8 +1,9 @@
 import React, { PropTypes } from 'react';
 
-const Icon = ({ name }) => (
+const Icon = ({ name, handleClick }) => (
 	<i className={`icon-${name}`}></i>
 );
+
 
 Icon.propTypes = {
 	name: PropTypes.string.isRequired

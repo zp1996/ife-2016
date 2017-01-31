@@ -1,0 +1,73 @@
+@charset 'utf-8';
+
+$header-size: 2 * $font-size-mid;
+@mixin th($h, $w, $font-size) {
+	@include lh-equal-h($h);
+	width: $w;
+	text-align: center;
+	font-size: $font-size;
+}
+@mixin icon-style($dir) {
+	@include lh-equal-h($header-size);
+	float: $dir;
+	margin-#{$dir}: 20px;
+}
+@mixin calendar-border-style($c) {
+	border-left: 1px solid $c;
+	border-right: 1px solid $c;
+}
+.calendar {
+	margin: 20px;
+}
+.calendar-day {
+	background: $active-color;
+	color: #fff;
+	@include calendar-border-style($active-color);
+	th {
+		@include th($header-size * 0.6, $header-size, $font-size-small);
+	}
+}
+.calendar-title {
+	@include lh-equal-h($header-size);
+	background: $active-color;
+	color: #fff;
+	width: 7 * $header-size;
+	text-align: center;
+	@include calendar-border-style($active-color);
+	i {
+		cursor: pointer;
+		font-size: $font-size-big;
+	}
+	.icon-caret-left {
+		@include icon-style(left);
+	}
+	.icon-caret-right {	
+		@include icon-style(right);
+	}
+}
+$disabled-td-color: #ccc;
+.calendar-date {
+	$calendar-date-border: 1px solid #F7EFEF;
+	background: $active-font-color;
+	cursor: pointer;
+	@include calendar-border-style($disabled-td-color);
+	td {
+		@include th($header-size, $header-size - 2, $font-size-base);
+		border-right: $calendar-date-border;
+	}
+	tr {
+		border-bottom: $calendar-date-border;
+		&:last-child {
+			border-bottom: 1px solid $disabled-td-color;
+		}
+		td:last-child {
+			border: none;
+		}
+	}
+}
+.active-td {
+	background: $hover-color;
+}
+.disabled-td {
+	color: $disabled-td-color;
+}

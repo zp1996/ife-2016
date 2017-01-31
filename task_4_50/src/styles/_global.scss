@@ -69,4 +69,21 @@ body {
 }
 .button-area {
 	border-top: $border-base;
+	padding: 2 * $font-size-big 0px;
+	color: #888;
+}
+.date {
+	margin-left: 40px;
+	label {
+		font-size: $font-size-mid;
+	}
+	span {
+		display: inline-block;
+		width: 180px;
+		@include lh-equal-h(1.5 * $font-size-big);
+		font-size: $font-size-mid;
+		padding: 0px 10px;
+		border: 1px solid #C1BCBC;
+		cursor: pointer;
+	}
 }

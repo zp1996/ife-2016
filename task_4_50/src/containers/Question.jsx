@@ -12,7 +12,8 @@ class Question extends Component {
 		this.state = has ? question : {
 			title: config.default_title,
 			status: null,
-			questions: Object.create(null)
+			questions: Object.create(null),
+			date: '请选择截止日期'
 		};
 		this.state.area = false;
 	}
@@ -20,10 +21,15 @@ class Question extends Component {
 		this.setState({
 			area: !this.state.area
 		});
-		console.log(this.state.area);
+	}
+	chooseDate() {
+		console.log(11111);
+		this.setState({
+			date: Math.random() * 19999
+		});
 	}
 	render() {
-		const { title, area } = this.state;
+		const { title, area, date } = this.state;
 		return (
 			<div className="question-container">
 				<div className="item-title">
@@ -44,7 +50,12 @@ class Question extends Component {
 					</div>
 				</div>
 				<div className="button-area">
-					<h1>zp1996</h1>
+					<div className="date">
+						<label>问卷截止日期：</label>
+						<span onClick={::this.chooseDate}>
+							{date}
+						</span>
+					</div>
 				</div>
 			</div>
 		);

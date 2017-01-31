@@ -1,12 +1,6 @@
-var g;
-try {
-    g = window;
-} catch(e) {
-    g = global;
-}
 /*
  * 利用localStroage进行数据存储
- * 数据结构如下：
+ * 数据结构如下a：
  * {
  *    next_id: xxx,
  *    items: {
@@ -26,6 +20,12 @@ try {
  *    } 
  * }
  */
+var g;
+try {
+    g = window;
+} catch(e) {
+    g = global;
+}
 class Data {
     constructor() {
         var data = this.readLocalStorage();
@@ -67,7 +67,13 @@ class Data {
 }
 
 const utils = {
-    Data: new Data()
-}
+    Data: new Data(),
+    getDays: (year, month) => {
+        return new Date(year, month, 0).getDate();
+    },
+    getFirstDate: (year, month) => {
+        return new Date(year, month - 1, 1).getDay();
+    }
+};
 
 module.exports = utils;
