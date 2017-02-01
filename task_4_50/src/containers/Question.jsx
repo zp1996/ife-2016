@@ -3,19 +3,22 @@ import { connect } from 'react-redux';
 import { addItem } from '../actions/items';
 import config from '../config';
 import Icon from '../components/Icon/index';
+import Calendar from '../components/Calendar/index';
 
 class Question extends Component {
 	constructor(props) {
 		super(props);
 		const { question } = props,
-			has = !!Object.keys(question).length;
+			has = !!Object.keys(question).length,
+			date = new Date();
 		this.state = has ? question : {
 			title: config.default_title,
 			status: null,
 			questions: Object.create(null),
-			date: '请选择截止日期'
+			date: [ date.getFullYear(), date.getMonth() + 1, date.getDate()]
 		};
 		this.state.area = false;
+		this.state.calendar = false;
 	}
 	handleArea() {
 		this.setState({
@@ -23,13 +26,18 @@ class Question extends Component {
 		});
 	}
 	chooseDate() {
-		console.log(11111);
 		this.setState({
-			date: Math.random() * 19999
+			calendar: !this.state.calendar
 		});
 	}
+	changeDate(date) {
+		this.setState({
+			date
+		});
+		this.chooseDate();
+	}
 	render() {
-		const { title, area, date } = this.state;
+		const { title, area, date, calendar } = this.state;
 		return (
 			<div className="question-container">
 				<div className="item-title">
@@ -53,9 +61,19 @@ class Question extends Component {
 					<div className="date">
 						<label>问卷截止日期：</label>
 						<span onClick={::this.chooseDate}>
-							{date}
+							{date.join('-')}
 						</span>
 					</div>
+				</div>
+				<div className="calendar-area">
+					{
+						calendar ? 
+							(<Calendar extendClass="question-calendar" 
+								date={date} 
+								handleClick={::this.changeDate}
+							/>) 
+							: null
+					}
 				</div>
 			</div>
 		);

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import Icon from '../Icon/index';
 import { getDays, getFirstDate } from "../../utils";
@@ -6,14 +6,20 @@ import { getDays, getFirstDate } from "../../utils";
 const chinese = ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '十一', '十二'],
 	TDNUMBER = 42;
 class Calendar extends Component {
+	static propTypes = {
+		handleClick: PropTypes.func
+	};
+	static defaultProps = {
+		handleClick: () => {}
+	};
 	constructor(props) {
 		super(props);
-		const date = new Date();
+		const { date } = props;
 		this.state = {
-			year: date.getFullYear(),
-			month: date.getMonth(),
-			date: date.getDate()
-		};
+			year: date[0],
+			month: date[1] - 1,
+			date: date[2]
+		}; 
 	}
 	addMonth() {
 		var { month, year } = this.state;
@@ -91,15 +97,19 @@ class Calendar extends Component {
 		return res;
 	}
 	changeDate(e) {
-		const { className } = e.target;
+		const { className } = e.target,
+			date = +(e.target.innerText);
 		if (className === '') {
 			this.setState({
-				date: +(e.target.innerText)	
+				date
 			});
+			const { handleClick } = this.props,
+				{ year, month } = this.state;
+			handleClick([year , month + 1, date]);
 		}
 	}
 	render() {
-		const { extendClass } = this.props,
+		const { extendClass, handleClick } = this.props,
 			{ year, month, date } = this.state,
 			classes = classnames({
 				[extendClass]: extendClass,

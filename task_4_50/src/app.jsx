@@ -14,9 +14,6 @@ import Header from './components/Header/index';
 
 import styles from './index.scss';
 
-
-import Calendar from './components/Calendar/index';
-
 const store = createStore(reducer);
 
 render(
@@ -26,7 +23,6 @@ render(
 			<Router history={browserHistory}>
 				<Route path="/" component={Index} />
 				<Route path="/add-question" component={DataQuestion} />
-				<Route path="/calendar" component={Calendar} />
 			</Router>
 		</div>
 	</Provider>,

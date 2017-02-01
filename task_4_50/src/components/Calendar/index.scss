@@ -18,6 +18,21 @@ $header-size: 2 * $font-size-mid;
 }
 .calendar {
 	margin: 20px;
+	width: 7 * $header-size + 2px;
+	position: relative;
+	&:before {
+		content: "\f0d8";
+		font-family: FontAwesome;
+	    font-weight: normal;
+	    font-style: normal;
+	    text-decoration: inherit;
+	    -webkit-font-smoothing: antialiased;
+	    position: absolute;
+	    top: -9px;
+	    left: 50%;
+	    margin-left: -4px;
+	    color: $active-color;
+	}
 }
 .calendar-day {
 	background: $active-color;
@@ -31,7 +46,6 @@ $header-size: 2 * $font-size-mid;
 	@include lh-equal-h($header-size);
 	background: $active-color;
 	color: #fff;
-	width: 7 * $header-size;
 	text-align: center;
 	@include calendar-border-style($active-color);
 	i {
