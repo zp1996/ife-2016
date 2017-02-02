@@ -1,5 +1,8 @@
 @charset 'utf-8';
 
+$add-question-color: #eee;
+$add-question-border-color: #ccc;
+
 body {
 	font-size: $font-size-base;
 	font-color: $font-color;
@@ -43,19 +46,38 @@ body {
 	color: #555;
 	border-bottom: $border-base;
 }
-.title:hover {
-	background: $hover-color;
+.title {
+	width: 100%;
+	font-size: $font-size-big;
+	@include lh-equal-h(3 * $font-size-big);
+	text-align: center;
+	&:hover {
+		background: $hover-color;
+	}
+	&-input {
+		$border-size: 1px;
+		height: 3 * $font-size-big;
+		box-sizing: border-box;
+		position: relative;
+		top: -$border-size;
+		border: $border-size solid #03A9F4;
+		font-weight: bold;
+		color: #555;
+		&:focus {
+			background: $hover-color;
+		}
+	}
 }
 .add-question-container {
 	margin: 1.5 * $font-size-big auto;
-	border: 1px solid #ccc;
+	border: 1px solid $add-question-border-color;
 	cursor: pointer;
 }
 .add-question {
 	@include lh-equal-h(4 * $font-size-big)
 	text-align: center;
 	font-size: $font-size-mid;
-	background: #eee;
+	background: $add-question-color;
 	color: #888;
 	i {
 		margin-right: 10px;
@@ -66,13 +88,36 @@ body {
 	overflow: hidden;
 	height: 0px;
 	line-height: 4 * $font-size-big;
+	text-align: center;
+	.icon-button {
+		color: #000;
+		background: $add-question-color;
+		border: 1px solid $add-question-border-color;
+		font-size: $font-size-base;
+		padding: 0px 15px 0px 10px;
+		@include lh-equal-h(2 * $font-size-mid);
+		&:nth-of-type(2) {
+			margin: 0px 15px;
+		}
+	}
 }
 .button-area {
-	border-top: $border-base;
-	padding: 2 * $font-size-big 0px;
+	$p: 2 * $font-size-big;
+	padding: $p 0px;
 	color: #888;
+	border-top: $border-base;
+	button {
+		float: right;
+		margin-right: 80px;
+		padding: 5px 15px;
+		box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+		&:last-child {
+			margin-right: 35px;
+		}
+	}
 }
 .date {
+	display: inline-block;
 	margin-left: 40px;
 	label {
 		font-size: $font-size-mid;

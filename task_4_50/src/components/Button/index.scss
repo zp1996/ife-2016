@@ -7,10 +7,14 @@ $icon-class-prefix: 'icon-button';
 	text-align: center;
 	background: $active-font-color;
 	border: $border-base;
-	margin: 50px;
+	&:hover {
+		@extend .#{$class-prefix}-active;
+	}
 }
 .#{$class-prefix}-active {
-	background: $active-color;
+	background: $active-color !important;
+	color: $active-font-color !important;
+	border: 1px solid $active-color !important;
 }
 .#{$class-prefix}-fixed-width {
 	width: 62px;
@@ -19,6 +23,9 @@ $icon-class-prefix: 'icon-button';
 	color: $active-font-color;
 	i {
 		margin-right: 12px;
+	}
+	&:hover {
+		@extend .#{$class-prefix}-active;
 	}
 }
 .#{$icon-class-prefix}-active {

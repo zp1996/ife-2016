@@ -6,7 +6,7 @@
  *    items: {
  *      '0': {
  *          title: xxx,
- *          status: 0,
+ *          status: 0,   // 0 未发布 1 发布中 -1 已经结束
  *          questions: {
  *             '0': {
  *                  type: xxx, 
@@ -40,11 +40,14 @@ class Data {
             JSON.stringify(this)
         );
     }
-    addItem({ title, questions }) {
+    addItem({ title, questions, status, date }) {
         const item = Object.create(null),
             { data } = this;
         item.title = title;
         item.questions = questions;
+        item.status = status;
+        item.date = date;
+        console.log(item);
         data.items[data.next_id++] = item;
         return data;
     }
