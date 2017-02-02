@@ -41,25 +41,23 @@ class Data {
         );
     }
     addItem({ title, questions, status, date }) {
-        const item = Object.create(null),
-            { data } = this;
-        item.title = title;
-        item.questions = questions;
-        item.status = status;
-        item.date = date;
-
+        const { data } = this,
+            item = {
+                title,
+                questions,
+                status,
+                date
+            };
         data.items[data.next_id++] = item;
-        data.items.length++;
-
         this.writeLocalStroage();
         return data;
     }
     delItem(id) {
         const { data } = this;
         delete data.items[id];
-        data.items.length--;
         this.writeLocalStroage();
-        return data;
+        // 删除时,需要变化data的引用,不然不能触发redux的更新
+        return clone(data);
     }
     addQuestion({ pid, type, title, options }) {
         const { data } = this,
@@ -70,10 +68,23 @@ class Data {
         const data = Object.create(null);
         data.next_id = 0;
         data.items = Object.create(null);
-        data.items.length = 0;
         return data;
     }
 }
+
+const clone = (obj) => {
+    const res = {};
+    for (let key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            if (obj[key] && (typeof obj[key] === 'object')) {
+                res[key] = clone(obj[key]);
+            } else {
+                res[key] = obj[key];
+            }  
+        }
+    }
+    return res;
+};
 
 const utils = {
     Data: new Data(),
@@ -82,7 +93,8 @@ const utils = {
     },
     getFirstDate: (year, month) => {
         return new Date(year, month - 1, 1).getDay();
-    }
+    },
+    clone
 };
 
 module.exports = utils;

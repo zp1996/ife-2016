@@ -1,4 +1,4 @@
-import { Data } from '../utils';
+import { Data, clone } from '../utils';
 
 const item = (state=Data.data, action) => {
 	switch(action.type) {

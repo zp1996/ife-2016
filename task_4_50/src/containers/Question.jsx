@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { addItem } from '../actions/items';
 
 import config from '../config';
-import { Data } from "../utils";
+import { Data, clone } from "../utils";
 
 import Icon from '../components/Icon/index';
 import Calendar from '../components/Calendar/index';
@@ -24,12 +24,11 @@ class Question extends Component {
 	}
 	constructor(props) {
 		super(props);
-		const { dispatch, question } = props,
+		const { question } = props,
 			{ id } = this.props.params;
 
 		this.has = !!id;
-
-		this.state = this.has ? question : Question.defaultItem();
+		this.state = this.has ? clone(question) : Question.defaultItem();
 		const { date } = this.state;
 		this.state.date = Array.isArray(date) ? date : date.split('-');
 		// 内部显示状态

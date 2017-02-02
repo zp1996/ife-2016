@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { browserHistory, Link } from 'react-router';
 
 import { toggleQuestion } from "../actions/question";
+import { delItem } from "../actions/items";
 
 import IconButton from '../components/Button/IconButton';
 import Button from '../components/Button/index';
@@ -18,6 +19,10 @@ const linkTo = () => {
 const edit = (id) => {
 	Dispatch(toggleQuestion(id));
 	browserHistory.push(`/question/${id}`);
+};
+
+const del = (id) => {
+	Dispatch(delItem(id));
 };
 
 const getStatus = (val) => {
@@ -48,11 +53,35 @@ const getButtons = ({ status }, id) => {
 	}
 	return (
 		<span>
-			<Button text="编辑" handleClick={() => { edit(id) }} />
-			<Button text="删除" />
+			<Button text="编辑" handleClick={ () => { edit(id) } } />
+			<Button text="删除" handleClick={ () => { del(id) } }/>
 			{look}
 		</span>
 	);
+};
+
+const getTbody = (items, tagKeys) => {
+	const keys = Object.keys(items);
+	return keys.map(
+		(id) => {
+			const val = items[id];
+			if (!val) return null;
+			return (
+				<tr key={`tr-${id}`} className="show-items-tr">
+					{
+						tagKeys.map((key, i) => (
+							<td key={`td-${i}`}>
+								{key === 'status' ? getStatus(val[key]) : val[key]}
+							</td>
+						))
+					}
+					<td>
+						{getButtons(val, id)}	
+					</td>
+				</tr>
+			);
+		}
+	)
 };
 
 const Table = ({ items }) => {
@@ -82,25 +111,7 @@ const Table = ({ items }) => {
 			</thead>
 			<tbody className="show-items-body">
 				{
-					Array.prototype.map.call(
-						items, 
-						(val, i) => {
-							return (
-								<tr key={`tr-${i}`} className="show-items-tr">
-									{
-										tagKeys.map((key, i) => (
-											<td key={`td-${i}`}>
-												{key === 'status' ? getStatus(val[key]) : val[key]}
-											</td>
-										))
-									}
-									<td>
-										{getButtons(val, i)}	
-									</td>
-								</tr>
-							);
-						}
-					)
+					getTbody(items, tagKeys)
 				}
 			</tbody>
 		</table>
@@ -108,7 +119,7 @@ const Table = ({ items }) => {
 };
 
 const IndexContainer = ({ data, dispatch }) => {
-	const hasItem = Object.keys(data.items).length >= 2;
+	const hasItem = Object.keys(data.items).length !== 0;
 	Dispatch = dispatch;
 	return hasItem ? 
 		(
