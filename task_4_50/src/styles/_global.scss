@@ -15,6 +15,66 @@ body {
 	background: #fff;
 	box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
 }
+.index-container {
+	padding: 15px;
+	@include index-container;
+}
+.show-items {
+	$lh: 2.5 * $font-size-big;
+	cursor: pointer;
+	font-size: $font-size-big;
+	color: #666;
+	text-align: center;
+	margin: auto;
+	.icon-button {
+		$blh: 1.5 * $font-size-mid;
+		float: right;
+		margin-right: 20px;
+		font-size: $font-size-mid;
+		line-height: blh;
+		margin-top: ($lh - $blh) / 2;
+	}
+	&-body {
+		font-size: $font-size-base;
+		.button {
+			margin: 0px 10px;
+		}
+	}
+	&-title {
+		font-weight: 600;
+		th {
+			line-height: $lh;
+			&:hover {
+				background: $hover-color;
+			}
+		}
+	}
+	&-tr {
+		line-height: 2.5;
+		border-bottom: $border-base;
+		&:hover {
+			background: $hover-color;
+		}
+	}
+	&-td-title {
+		width: 300px;
+	}
+	&-td-date {
+		width: 200px;
+	}
+	&-td-status {
+		width: 100px;
+	}
+	&-td-handle {
+		width: 300px;
+	}
+}
+.status-publish {
+	color: green;
+}
+.status-end {
+	color: red;
+}
 .no-index-container {
 	@include index-container;
 	position: relative;

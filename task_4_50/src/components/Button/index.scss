@@ -31,3 +31,12 @@ $icon-class-prefix: 'icon-button';
 .#{$icon-class-prefix}-active {
 	@extend .#{$class-prefix}-active;
 }
+.#{$class-prefix}-link {
+	display: inline-block;
+	@extend .#{$class-prefix};
+	@extend .#{$class-prefix}-fixed-width;
+	font-size: $font-size-small;
+	color: #666;
+	text-decoration: none;
+	line-height: 20px;
+}

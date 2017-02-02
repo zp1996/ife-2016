@@ -1,48 +1,52 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+
 import { addItem } from '../actions/items';
+
 import config from '../config';
+import { Data } from "../utils";
+
 import Icon from '../components/Icon/index';
 import Calendar from '../components/Calendar/index';
 import Button from '../components/Button/index';
 import IconButton from '../components/Button/IconButton';
-import utils from "../utils";
+
 
 class Question extends Component {
-	constructor(props) {
-		super(props);
-
-		const { question } = props,
-			date = new Date();
-
-		this.has = !!Object.keys(question).length;
-
-		this.state = this.has ? question : {
+	static defaultItem() {
+		const date = new Date();
+		return {
 			title: config.default_title,
-			status: null,
+			status: 0,
 			questions: Object.create(null),
 			date: [ date.getFullYear(), date.getMonth() + 1, date.getDate()]
 		};
+	}
+	constructor(props) {
+		super(props);
+		const { dispatch, question } = props,
+			{ id } = this.props.params;
+
+		this.has = !!id;
+
+		this.state = this.has ? question : Question.defaultItem();
+		const { date } = this.state;
+		this.state.date = Array.isArray(date) ? date : date.split('-');
 		// 内部显示状态
 		this.state.area = false;
 		this.state.calendar = false;
 		this.state.activeInput = '';
 	}
-	handleArea() {
+	changeInnerState(key) {
 		this.setState({
-			area: !this.state.area
-		});
-	}
-	chooseDate() {
-		this.setState({
-			calendar: !this.state.calendar
+			[key]: !this.state[key]
 		});
 	}
 	changeDate(date) {
 		this.setState({
 			date
 		});
-		this.chooseDate();
+		this.changeInnerState('calendar');
 	}
 	inputBlur() {
 		this.setState({
@@ -59,17 +63,22 @@ class Question extends Component {
 			activeInput: val
 		});
 	}
-	diff() {
+	patch() {
+		// 新增问卷 不用diff
 		if (!this.has) {
-			const { questions, status, date, title } = this.state;
-			utils.Data.addItem({
-				questions,
-				status, 
-				date,
-				title
-			});
-		}	
-		console.log(utils.Data);
+			const { questions, status, date, title } = this.state,
+				{ dispatch } = this.props;
+			dispatch(
+				addItem({
+					questions,
+					status, 
+					date: date.join('-'),
+					title
+				})
+			);
+		} else {
+
+		}
 	}
 	render() {
 		const { title, area, date, calendar, activeInput } = this.state;
@@ -101,7 +110,7 @@ class Question extends Component {
 						<IconButton text="多选" icon="check" />
 						<IconButton text="文本" icon="list-alt" />
 					</div>
-					<div className="add-question" onClick={::this.handleArea}>
+					<div className="add-question" onClick={this.changeInnerState.bind(this, 'area')}>
 						<span>
 							<Icon name="plus" />
 							添加问题
@@ -111,12 +120,12 @@ class Question extends Component {
 				<div className="button-area">
 					<div className="date">
 						<label>问卷截止日期：</label>
-						<span onClick={::this.chooseDate}>
+						<span onClick={this.changeInnerState.bind(this, 'calendar')}>
 							{date.join('-')}
 						</span>
 					</div>
-					<Button text={"发布问卷"} isFixed={false} handleClick={:: this.diff} />
-					<Button text={"保存问卷"} isFixed={false} handleClick={:: this.diff} />
+					<Button text={"发布问卷"} isFixed={false} handleClick={::this.patch} />
+					<Button text={"保存问卷"} isFixed={false} handleClick={::this.patch} />
 				</div>
 				<div className="calendar-area">
 					{

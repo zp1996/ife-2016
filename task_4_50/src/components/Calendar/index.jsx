@@ -16,9 +16,9 @@ class Calendar extends Component {
 		super(props);
 		const { date } = props;
 		this.state = {
-			year: date[0],
-			month: date[1] - 1,
-			date: date[2]
+			year: +date[0],
+			month: +(date[1] - 1),
+			date: +(date[2])
 		}; 
 	}
 	addMonth() {

@@ -29,7 +29,7 @@ try {
 class Data {
     constructor() {
         var data = this.readLocalStorage();
-        this.data = data == null ? Data.defaultData() : JSON.parse(data);
+        this.data = data == null ? Data.defaultData() : JSON.parse(data).data;
     } 
     readLocalStorage() {
         return g.localStorage && g.localStorage.getItem('data');
@@ -47,13 +47,18 @@ class Data {
         item.questions = questions;
         item.status = status;
         item.date = date;
-        console.log(item);
+
         data.items[data.next_id++] = item;
+        data.items.length++;
+
+        this.writeLocalStroage();
         return data;
     }
     delItem(id) {
         const { data } = this;
         delete data.items[id];
+        data.items.length--;
+        this.writeLocalStroage();
         return data;
     }
     addQuestion({ pid, type, title, options }) {
@@ -65,6 +70,7 @@ class Data {
         const data = Object.create(null);
         data.next_id = 0;
         data.items = Object.create(null);
+        data.items.length = 0;
         return data;
     }
 }

@@ -4,9 +4,11 @@ const config = {
 		title: '问卷管理',
 		sm_title: '我的问卷'
 	},
-	tags: [{
-		
-	}],
+	tags: {
+		title: '标题',
+		date: '时间',
+		status: '状态'
+	},
 	default_title: '这里是标题'
 };
 
