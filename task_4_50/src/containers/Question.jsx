@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { addItem } from '../actions/items';
+import { addItem, changeTitle, changeDate } from '../actions/items';
 
 import config from '../config';
 import { Data, clone } from "../utils";
@@ -26,10 +26,8 @@ class Question extends Component {
 		super(props);
 		const { question } = props,
 			{ id } = this.props.params;
-
 		this.has = !!id;
 		this.state = this.has ? clone(question) : Question.defaultItem();
-		console.log(this.state);
 		// 内部显示状态
 		this.state.area = false;
 		this.state.calendar = false;
@@ -63,9 +61,9 @@ class Question extends Component {
 	}
 	patch() {
 		// 新增问卷 不用diff
+		const { dispatch } = this.props;
 		if (!this.has) {
-			const { questions, status, date, title } = this.state,
-				{ dispatch } = this.props;
+			const { questions, status, date, title } = this.state;
 			dispatch(
 				addItem({
 					questions,
@@ -78,14 +76,28 @@ class Question extends Component {
 			const patches = this.diff(this.state),
 				len = patches.length;
 			for (let i = 0; i < len; i++) {
-				dispatch(patches[i]);
+				dispatch(
+					patches[i]()
+				);
 			}
 			Data.writeLocalStroage(); 
 		}
 	}
 	diff(state) {
-		const { question } = this.props;
-		console.log(question);
+		const { question } = this.props,
+			patches = [],
+			{ id, title, date } = state;
+		if (question.title !== title) {
+			patches.push(
+				() => changeTitle(id, title)
+			);
+		}	
+		if (question.date.join('') !== date.join('')) {
+			patches.push(
+				() => changeDate(id, date)
+			);
+		}
+		return patches;
 	}
 	render() {
 		const { title, area, date, calendar, activeInput } = this.state;
@@ -159,4 +171,3 @@ const DataQuestion = connect(
 )(Question);
 
 export default DataQuestion;
-

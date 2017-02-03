@@ -5,6 +5,7 @@
  *    next_id: xxx,
  *    items: {
  *      '0': {
+ *          id: 0,
  *          title: xxx,
  *          status: 0,   // 0 未发布 1 发布中 -1 已经结束
  *          questions: {
@@ -40,13 +41,25 @@ class Data {
             JSON.stringify(this)
         );
     }
+    baseChange(id, key, val) {
+        const { data } = this;
+        data.items[id][key] = val;
+        return data;
+    }
+    changeTitle(id, title) {
+        return this.baseChange(id, 'title', title);
+    }
+    changeDate(id, date) {
+        return this.baseChange(id, 'date', date);
+    }
     addItem({ title, questions, status, date }) {
         const { data } = this,
             item = {
                 title,
                 questions,
                 status,
-                date
+                date,
+                id: data.next_id
             };
         data.items[data.next_id++] = item;
         this.writeLocalStroage();
