@@ -29,8 +29,7 @@ class Question extends Component {
 
 		this.has = !!id;
 		this.state = this.has ? clone(question) : Question.defaultItem();
-		const { date } = this.state;
-		this.state.date = Array.isArray(date) ? date : date.split('-');
+		console.log(this.state);
 		// 内部显示状态
 		this.state.area = false;
 		this.state.calendar = false;
@@ -71,13 +70,22 @@ class Question extends Component {
 				addItem({
 					questions,
 					status, 
-					date: date.join('-'),
+					date,
 					title
 				})
 			);
 		} else {
-
+			const patches = this.diff(this.state),
+				len = patches.length;
+			for (let i = 0; i < len; i++) {
+				dispatch(patches[i]);
+			}
+			Data.writeLocalStroage(); 
 		}
+	}
+	diff(state) {
+		const { question } = this.props;
+		console.log(question);
 	}
 	render() {
 		const { title, area, date, calendar, activeInput } = this.state;

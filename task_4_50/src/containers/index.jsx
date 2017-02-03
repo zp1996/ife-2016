@@ -25,6 +25,12 @@ const del = (id) => {
 	Dispatch(delItem(id));
 };
 
+const getTds = {
+	status: val => getStatus(val),
+	date: val => val.join('-'),
+	title: val => val
+};
+
 const getStatus = (val) => {
 	switch(val) {
 		case 1:
@@ -71,7 +77,7 @@ const getTbody = (items, tagKeys) => {
 					{
 						tagKeys.map((key, i) => (
 							<td key={`td-${i}`}>
-								{key === 'status' ? getStatus(val[key]) : val[key]}
+								{getTds[key](val[key])}
 							</td>
 						))
 					}

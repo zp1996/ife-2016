@@ -76,7 +76,9 @@ const clone = (obj) => {
     const res = {};
     for (let key in obj) {
         if (obj.hasOwnProperty(key)) {
-            if (obj[key] && (typeof obj[key] === 'object')) {
+            if (Array.isArray(obj[key])) {
+                res[key] = obj[key].slice();
+            } else if (obj[key] instanceof Object) {
                 res[key] = clone(obj[key]);
             } else {
                 res[key] = obj[key];
