@@ -6,11 +6,11 @@ import { addItem, changeTitle, changeDate } from '../actions/items';
 import config from '../config';
 import { Data, clone } from "../utils";
 
+import Layer from '../components/Layer/index';
 import Icon from '../components/Icon/index';
 import Calendar from '../components/Calendar/index';
 import Button from '../components/Button/index';
 import IconButton from '../components/Button/IconButton';
-
 
 class Question extends Component {
 	static defaultItem() {
@@ -18,7 +18,7 @@ class Question extends Component {
 		return {
 			title: config.default_title,
 			status: 0,
-			questions: Object.create(null),
+			questions: [],
 			date: [ date.getFullYear(), date.getMonth() + 1, date.getDate()]
 		};
 	}
@@ -32,6 +32,8 @@ class Question extends Component {
 		this.state.area = false;
 		this.state.calendar = false;
 		this.state.activeInput = '';
+		this.state.layer = false;
+		this.state.layerConfig = {};
 	}
 	changeInnerState(key) {
 		this.setState({
@@ -58,6 +60,24 @@ class Question extends Component {
 		this.setState({
 			activeInput: val
 		});
+	}
+	save() {
+		this.setState({
+			layerConfig: {
+				content: '该问卷已经保存成功！'
+			}
+		});
+		this.changeInnerState('layer');
+		this.patch();
+	}
+	publish() {
+		this.setState({
+			layerConfig: {
+				content: '该问卷已经发布成功！'
+			}
+		});
+		this.changeInnerState('layer');
+		this.patch();
 	}
 	patch() {
 		// 新增问卷 不用diff
@@ -100,9 +120,26 @@ class Question extends Component {
 		return patches;
 	}
 	render() {
-		const { title, area, date, calendar, activeInput } = this.state;
+		const { 
+			title, 
+			area, 
+			date, 
+			calendar, 
+			activeInput,
+			questions,
+			layer,
+			layerConfig
+		} = this.state;
 		return (
 			<div className="question-container">
+				{
+					layer ? <Layer 
+						{...layerConfig}
+						destroy={ () => {
+							this.changeInnerState('layer')
+						}}
+					/> : null
+				}
 				<div className="item-title" onClick={this.showInput.bind(this, 'title')}>
 					{	
 						activeInput === 'title' ?
@@ -143,8 +180,8 @@ class Question extends Component {
 							{date.join('-')}
 						</span>
 					</div>
-					<Button text={"发布问卷"} isFixed={false} handleClick={::this.patch} />
-					<Button text={"保存问卷"} isFixed={false} handleClick={::this.patch} />
+					<Button text={"发布问卷"} isFixed={false} handleClick={::this.publish} />
+					<Button text={"保存问卷"} isFixed={false} handleClick={::this.save} />
 				</div>
 				<div className="calendar-area">
 					{

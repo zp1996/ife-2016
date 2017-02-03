@@ -19,3 +19,8 @@ export const changeDate = (id, date) => ({
 	date,
 	id
 });
+
+export const publishItem = (id) => ({
+	type: 'PUBLISH_ITEM',
+	id
+});

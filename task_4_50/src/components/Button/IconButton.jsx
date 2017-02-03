@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import classnames from 'classnames';
 import Icon from '../Icon/index';
+import { noop } from '../../utils';
 
 const classPrefix = 'icon-button';
 
@@ -24,7 +25,7 @@ IconButton.propTypes = {
 };
 
 IconButton.defaultProps = {
-	handleClick: () => {},
+	handleClick: noop,
 	isActive: false
 };
 

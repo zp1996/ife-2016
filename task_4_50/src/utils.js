@@ -8,15 +8,15 @@
  *          id: 0,
  *          title: xxx,
  *          status: 0,   // 0 未发布 1 发布中 -1 已经结束
- *          questions: {
- *             '0': {
+ *          questions: [
+ *             {
  *                  type: xxx, 
  *                  title: xxx,
  *                  options: {
  *                      '0': xxxx
  *                 } 
  *              }
- *          }
+ *          ]
  *       }
  *    } 
  * }
@@ -65,17 +65,27 @@ class Data {
         this.writeLocalStroage();
         return data;
     }
-    delItem(id) {
+    changeItem(id, fn) {
         const { data } = this;
-        delete data.items[id];
+        fn(data);
         this.writeLocalStroage();
-        // 删除时,需要变化data的引用,不然不能触发redux的更新
+        // 需要变化data的引用,不然不能触发redux的自动更新
         return clone(data);
+    }
+    delItem(id) {
+        return this.changeItem(id, ({ items }) => {
+            delete items[id];
+        });
     }
     addQuestion({ pid, type, title, options }) {
         const { data } = this,
             item = data[pid];
         
+    }
+    publishItem(id) {
+        return this.changeItem(id, ({ items }) => {
+            items[id].status = 1;
+        });
     }
     static defaultData() {
         const data = Object.create(null);
@@ -109,6 +119,7 @@ const utils = {
     getFirstDate: (year, month) => {
         return new Date(year, month - 1, 1).getDay();
     },
+    noop: () => {},
     clone
 };
 

@@ -10,6 +10,8 @@ const item = (state=Data.data, action) => {
 			return Data.changeTitle(action.id, action.title);
 		case 'CHANGE_DATE':
 			return Data.changeDate(action.id, action.date);
+		case 'PUBLISH_ITEM':
+			return Data.publishItem(action.id);
 		default: 
 			return state;
 	}

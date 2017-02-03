@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import Icon from '../Icon/index';
-import { getDays, getFirstDate } from "../../utils";
+import { getDays, getFirstDate, noop } from "../../utils";
 
 const chinese = ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '十一', '十二'],
 	TDNUMBER = 42;
@@ -10,7 +10,7 @@ class Calendar extends Component {
 		handleClick: PropTypes.func
 	};
 	static defaultProps = {
-		handleClick: () => {}
+		handleClick: noop
 	};
 	constructor(props) {
 		super(props);

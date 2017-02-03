@@ -1,0 +1,28 @@
+@charset 'utf-8';
+
+$mask-class-prefix: 'mask';
+
+.#{$mask-class-prefix} {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+	z-index: $mask-z-index;
+	background: rgba(0, 0, 0, 0.4);	
+}
+.#{$mask-class-prefix}-enter {
+  	opacity: 0;
+}
+.#{$mask-class-prefix}-enter.#{$mask-class-prefix}-enter-active {
+  	opacity: 1;
+  	transition: opacity 300ms ease-in-out;
+}
+
+.#{$mask-class-prefix}-leave {
+  	opacity: 1;
+}
+.#{$mask-class-prefix}-leave.#{$mask-class-prefix}-leave-active {
+  	opacity: 0;
+  	transition: opacity 500ms ease-in-out;
+}

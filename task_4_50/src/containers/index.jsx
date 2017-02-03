@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { browserHistory, Link } from 'react-router';
 
 import { toggleQuestion } from "../actions/question";
-import { delItem } from "../actions/items";
+import { delItem, publishItem } from "../actions/items";
 
+import Layer from '../components/Layer/index';
 import IconButton from '../components/Button/IconButton';
 import Button from '../components/Button/index';
 
@@ -20,11 +21,7 @@ const edit = (id) => {
 	Dispatch(toggleQuestion(id));
 	browserHistory.push(`/question/${id}`);
 };
-
-const del = (id) => {
-	Dispatch(delItem(id));
-};
-
+	
 const getTds = {
 	status: val => getStatus(val),
 	date: val => val.join('-'),
@@ -42,29 +39,73 @@ const getStatus = (val) => {
 	}
 };
 
-const getButtons = ({ status }, id) => {
-	var look;
-	if (status) {
-		look = (
-			<Link to="/answer" className="button-link">
-				回答问卷
-			</Link>
-		);
-	} else {
-		look = (
-			<Link to="/look-item-data" className="button-link">
-				查看数据
-			</Link>
-		);
+class Buttons extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			layer: false,
+			layerConfig: {}
+		};
 	}
-	return (
-		<span>
-			<Button text="编辑" handleClick={ () => { edit(id) } } />
-			<Button text="删除" handleClick={ () => { del(id) } }/>
-			{look}
-		</span>
-	);
-};
+	publish() {
+		this.setState({
+			layer: true,
+			layerConfig: {
+				content: '该问卷发布成功'
+			}
+		});
+		Dispatch(publishItem(this.props.id));
+	}
+	del() {
+		this.setState({
+			layer: true,
+			layerConfig: {
+				type: 'confirm',
+				content: '是否删除该问卷？',
+				yes: () => {
+					Dispatch(delItem(this.props.id));
+				}
+			}
+		});
+	}
+	render() {
+		const { status, id } = this.props,
+			{ layer, layerConfig } = this.state;
+
+		const look = status === 0 ? (
+				<Button text="发布问卷" handleClick={::this.publish} />
+			) : (
+				<Link to="/look-item-data" className="button-link">
+					查看数据
+				</Link>
+			);
+		const isAnswer = status === 1 ? (
+				<Link to="/look-item-data" className="button-link">
+					回答
+				</Link>
+			) : (
+				<Button text="编辑" handleClick={ () => { edit(id) } } />
+			);
+
+		return (
+			<span>
+				{
+					layer ? <Layer 
+						{...layerConfig}
+						destroy={ () => {
+							this.setState({
+								layer: !layer
+							})
+						}}
+					/> : null
+				}
+				{isAnswer}
+				<Button text="删除" handleClick={::this.del}/>
+				{look}
+			</span>
+		); 
+	}
+}
 
 const getTbody = (items, tagKeys) => {
 	const keys = Object.keys(items);
@@ -82,7 +123,7 @@ const getTbody = (items, tagKeys) => {
 						))
 					}
 					<td>
-						{getButtons(val, id)}	
+						<Buttons status={val.status} id={id} />	
 					</td>
 				</tr>
 			);

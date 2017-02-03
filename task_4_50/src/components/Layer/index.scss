@@ -1,0 +1,66 @@
+@charset 'utf-8';
+$layer-height: 240px;
+@mixin layer-style($keyframes) {
+	width: 480px;
+	height: $layer-height;
+	@include center;
+	animation: $keyframes 0.5s;
+	background: #fff;
+	border-radius: 5px;
+}
+@keyframes run {
+	from {
+		transform: scale(0, 0);
+	}
+	to {
+		transform: scale(1, 1);
+	}
+}
+@keyframes run-none {
+	from {
+		transform: scale(1, 1);
+	}
+	to {
+		transform: scale(0, 0);
+	}
+}
+$layer-class-prefix: 'layer';
+.#{$layer-class-prefix} {
+	@include layer-style(run);
+}
+.#{$layer-class-prefix}-none {
+	@include layer-style(run-none);
+	transform: scale(0, 0);
+}
+.#{$layer-class-prefix}-title {
+	@include lh-equal-h(2 * $font-size-big);
+	font-size: $font-size-big;
+	span {
+		margin-left: 10px;
+	}
+	i {
+		float: right;
+		margin-right: 20px;
+		cursor: pointer;
+		color: #aaa;
+		@include lh-equal-h(2 * $font-size-big);
+	}
+	background: rgba(226, 226, 226, 0.3);
+}
+.#{$layer-class-prefix}-content {
+	$h: $layer-height - 5 * $font-size-big;
+	font-size: $font-size-mid;
+	text-align: center;
+	height: $h;
+	line-height: $h;
+}
+.#{$layer-class-prefix}-button-area {
+	text-align: center;
+	line-height: 3 * $font-size-big;
+	button {
+		box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+		&:nth-of-type(2) {
+			margin-left: 30px;
+		}
+	}
+}

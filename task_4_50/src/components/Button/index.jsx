@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import classnames from 'classnames';
+import { noop } from '../../utils';
 
 const classPrefix  = "button";
 
@@ -24,7 +25,7 @@ Button.propTypes = {
 };
 
 Button.defaultProps = {
-	handleClick: () => {},
+	handleClick: noop,
 	isActive: false,
 	isFixed: true
 };
