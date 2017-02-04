@@ -80,7 +80,7 @@ class Buttons extends Component {
 				</Link>
 			);
 		const isAnswer = status === 1 ? (
-				<Link to="/look-item-data" className="button-link">
+				<Link to={`/answer/${id}`} className="button-link">
 					回答
 				</Link>
 			) : (

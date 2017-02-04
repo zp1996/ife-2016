@@ -212,6 +212,9 @@ body {
 	padding: 25px;
 	&:hover {
 		background: $hover-color;
+		.handle-area {
+			opacity: 1;
+		}
 	}
 	h2 {
 		font-size: $font-size-big;
@@ -229,7 +232,7 @@ $p-margin: 47px;
 	.option-remove {
 		display: none;
 	}
-	&:hover .option-remove{
+	&:hover .option-remove {
 		display: inline;
 	}
 }
@@ -272,5 +275,32 @@ $option-icon-margin: 10px;
 	&:hover {
 		opacity: 1;
 		transition: opacity 0.3s;
+	}
+}
+.show-text-question {
+	width: 90%;
+	height: 4 * $font-size-big;
+	resize: none;
+	margin: 10px 0px 10px $p-margin;
+}
+.handle-area {
+	text-align: right;
+	font-size: $font-size-mid;
+	margin-top: $font-size-mid;
+	opacity: 0;
+	transition: opacity 0.2s;
+	span {
+		cursor: pointer;
+		margin-right: 20px;
+	}
+}
+.choose-require {
+	float: left;
+	input {
+		vertical-align: middle;
+		cursor: pointer;
+		display: inline-block;
+		width: $font-size-mid;
+		height: $font-size-mid;
 	}
 }

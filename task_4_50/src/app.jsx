@@ -24,6 +24,7 @@ render(
 				<Route path="/" component={Index} />
 				<Route path="/add-question" component={DataQuestion} />
 				<Route path="/question/:id" component={DataQuestion} />
+				<Route path="/answer/:id" component={DataQuestion} />
 			</Router>
 		</div>
 	</Provider>,

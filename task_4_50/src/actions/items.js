@@ -24,3 +24,9 @@ export const publishItem = (id) => ({
 	type: 'PUBLISH_ITEM',
 	id
 });
+
+export const updateQuestions = (id, questions) => ({
+	type: 'UPDATE_QUESTIONS',
+	id,
+	questions
+});

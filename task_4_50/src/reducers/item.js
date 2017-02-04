@@ -12,6 +12,8 @@ const item = (state=Data.data, action) => {
 			return Data.changeDate(action.id, action.date);
 		case 'PUBLISH_ITEM':
 			return Data.publishItem(action.id);
+		case 'UPDATE_QUESTIONS':
+			return Data.updateQuestions(action.id, action.questions);
 		default: 
 			return state;
 	}

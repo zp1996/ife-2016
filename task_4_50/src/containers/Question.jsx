@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
 
-import { addItem, changeTitle, changeDate } from '../actions/items';
+import { addItem, changeTitle, changeDate, publishItem, updateQuestions } from '../actions/items';
 
 import config from '../config';
 import { Data, clone, getDomData } from "../utils";
@@ -22,18 +23,15 @@ class Question extends Component {
 			date: [ date.getFullYear(), date.getMonth() + 1, date.getDate()]
 		};
 	}
-	static defaultRadio() {
-		return {
-			type: 'radio',
-			title: '单选题',
-			options: [{
-				val: '选项1',
+	static defaultQuestion(type, title, count=2) {
+		const options = [];
+		for (let i = 1; i <= count; i++) {
+			options.push({
+				val: `选项${i}`,
 				count: '0'
-			}, {
-				val: '选项2',
-				count: '0'
-			}]
-		};
+			});
+		}
+		return { type, title, options };
 	}
 	constructor(props) {
 		super(props);
@@ -75,6 +73,7 @@ class Question extends Component {
 	save() {
 		this.setState({
 			layerConfig: {
+				yes: () => browserHistory.push('/'),
 				content: '该问卷已经保存成功！'
 			}
 		});
@@ -82,12 +81,15 @@ class Question extends Component {
 		this.patch();
 	}
 	publish() {
+		const { date } = this.state;
 		this.setState({
 			layerConfig: {
-				content: '该问卷已经发布成功！'
+				yes: () => browserHistory.push('/'),
+				content: `该问卷已经发布成功，截止日期为${date.join('-')}`
 			}
 		});
 		this.changeInnerState('layer');
+		this.state.status = 1;
 		this.patch();
 	}
 	patch() {
@@ -117,7 +119,7 @@ class Question extends Component {
 	diff(state) {
 		const { question } = this.props,
 			patches = [],
-			{ id, title, date } = state;
+			{ id, title, date, status, questions } = state;
 		if (question.title !== title) {
 			patches.push(
 				() => changeTitle(id, title)
@@ -126,6 +128,20 @@ class Question extends Component {
 		if (question.date.join('') !== date.join('')) {
 			patches.push(
 				() => changeDate(id, date)
+			);
+		}
+		if (question.status !== status) {
+			patches.push(
+				() => publishItem(id)
+			);
+		}
+		// questions直接充值
+		if (!
+			(question.questions.length === 0 && 
+			questions.length === 0)
+		) {
+			patches.push(
+				() => updateQuestions(id, questions)
 			);
 		}
 		return patches;
@@ -159,19 +175,67 @@ class Question extends Component {
 		questions[data[0]].options.splice(data[1], 1);
 		this.setState({ questions });
 	}
-	addQuestion(type) {
+	addQuestion(type, title, count) {
 		const { questions } = this.state;
 		questions.push(
-			Question[`default${type}`]()
+			Question.defaultQuestion(type, title, count)
 		);
 		this.setState({
 			questions,
 			area: !this.state.area
 		});
 	}
-	delQuestion() {
-
+	addTextQuestion() {
+		const { questions } = this.state;
+		questions.push({
+			type: 'text',
+			title: '文本题',
+			answers: [],
+			isRequired: false
+		});
+		this.setState({
+			questions,
+			area: !this.state.area
+		});
 	}
+	handleQuestion(fn) {
+		const { questions } = this.state;
+		fn(questions);
+		this.setState({ questions });
+	}
+	changeRequired(id) {
+		this.handleQuestion(arr => {
+			const { isRequired } = arr[id];
+			arr[id].isRequired = !isRequired;
+		});
+	}
+	delQuestion(id) {
+		this.handleQuestion(arr => arr.splice(id, 1));
+	}
+	copyQuestion(id) {
+		this.handleQuestion(
+			arr => arr.splice(
+				id,
+				0, 
+				clone(arr[id])
+			)
+		);
+	}
+	bottomQuestion(id) {
+		this.handleQuestion(arr => {
+			const temp = arr[id];
+			arr[id] = arr[id + 1];
+			arr[id + 1] = temp;
+		});
+	}
+	topQuestion(id) {
+		this.handleQuestion(arr => {
+			const temp = arr[id];
+			arr[id] = arr[id - 1];
+			arr[id - 1] = temp;
+		});
+	}
+	// 用代理节省内存空间
 	delegate(e) {
 		const { className } = e.target;
 		var data;
@@ -194,15 +258,18 @@ class Question extends Component {
 					getDomData(e.target.parentNode, 'question');
 				this.addOption(data);
 				break;
+			case 'copy-question':
+			case 'del-question':
+			case 'top-question':
+			case 'bottom-question':
+				let type = className.split('-')[0];
+				data = +getDomData(e.target.parentNode, 'id')
+				this[`${type}Question`](data);
+				break;
 		}
 	}
 	getOptionIcon(type) {
-		var name;
-		switch(type) {
-			case 'radio':
-				name = 'circle-blank';
-				break;
-		}
+		const name = type === 'radio' ? 'circle-blank' : 'check-empty';
 		return (
 			<Icon name={name} extendClass="option-icon" />
 		);
@@ -244,6 +311,7 @@ class Question extends Component {
 			layer,
 			layerConfig
 		} = this.state;
+		const len = questions.length - 1;
 		return (
 			<div className="question-container">
 				{
@@ -284,13 +352,33 @@ class Question extends Component {
 											<span className="one-question-title" data-title={i}>{val.title}</span>
 										}
 									</h2>
-									{ this.getOptions(val, i) }
-									<div className="add-option" data-question={i}>
-										<Icon name="plus" extendClass="add-option-icon" />
+									{
+										val.type === 'text' ? (
+											<div>
+												<textarea className="show-text-question"></textarea>
+											</div>
+										) : (
+											<div>
+												{ this.getOptions(val, i) }
+												<div className="add-option" data-question={i}>
+													<Icon name="plus" extendClass="add-option-icon" />
+												</div>
+											</div>
+										)
+									}
+									<div className="handle-area" data-id={i}>
+										{ 
+											val.type === "text" ? 
+											<span className="choose-require">
+												<input type="checkbox" checked={val.isRequired} onChange={this.changeRequired.bind(this, i)} />
+												此题是否必填
+											</span> : null	 
+										}
+										{ i !== 0 ? <span className="top-question">上移</span> : null }
+										{ i !== len ? <span className="bottom-question">下移</span> : null }
+										<span className="copy-question">复用</span>
+										<span className="del-question">删除</span>
 									</div>
-									<span className="handle-area">
-										复用
-									</span>
 								</div>
 							);
 						})
@@ -305,9 +393,15 @@ class Question extends Component {
 					>
 						<IconButton text="单选" 
 							icon="circle-blank" 
-							handleClick={() => this.addQuestion('Radio')} />
-						<IconButton text="多选" icon="check" />
-						<IconButton text="文本" icon="list-alt" />
+							handleClick={() => this.addQuestion('radio', '单选题')} 
+						/>
+						<IconButton text="多选" 
+							icon="check"
+							handleClick={() => this.addQuestion('check', '多选题', 4)}
+						/>
+						<IconButton text="文本" icon="list-alt"
+							handleClick={::this.addTextQuestion}
+					 	/>
 					</div>
 					<div className="add-question" onClick={this.changeInnerState.bind(this, 'area')}>
 						<span>

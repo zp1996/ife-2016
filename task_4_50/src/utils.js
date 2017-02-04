@@ -52,6 +52,9 @@ class Data {
     changeDate(id, date) {
         return this.baseChange(id, 'date', date);
     }
+    updateQuestions(id, questions) {
+        return this.baseChange(id, 'questions', questions);
+    }
     addItem({ title, questions, status, date }) {
         const { data } = this,
             item = {
