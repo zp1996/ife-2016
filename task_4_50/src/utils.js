@@ -80,7 +80,7 @@ class Data {
     addQuestion({ pid, type, title, options }) {
         const { data } = this,
             item = data[pid];
-        
+                
     }
     publishItem(id) {
         return this.changeItem(id, ({ items }) => {
@@ -96,16 +96,21 @@ class Data {
 }
 
 const clone = (obj) => {
-    const res = {};
-    for (let key in obj) {
-        if (obj.hasOwnProperty(key)) {
-            if (Array.isArray(obj[key])) {
-                res[key] = obj[key].slice();
-            } else if (obj[key] instanceof Object) {
-                res[key] = clone(obj[key]);
-            } else {
-                res[key] = obj[key];
-            }  
+    if (typeof obj !== 'object') return obj;
+    const flag = Array.isArray(obj),
+        res = flag ? [] : {};
+    if (flag) {
+        const len = obj.length;
+        for (let i = 0; i < len; i++) {
+            res[i] = typeof obj[i] !== 'object' ? 
+                obj[i] : clone(obj[i]);
+        }
+    }  else {
+        for (let key in obj) {
+            if (obj.hasOwnProperty(key)) { 
+                res[key] = typeof obj[key] !== 'object' ? 
+                    obj[key] : clone(obj[key]);
+            }
         }
     }
     return res;

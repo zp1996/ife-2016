@@ -22,6 +22,22 @@ class Question extends Component {
 			date: [ date.getFullYear(), date.getMonth() + 1, date.getDate()]
 		};
 	}
+	static defaultRadio() {
+		return {
+			type: 'radio',
+			title: '单选题',
+			options: {
+				'A': {
+					val: '选项一',
+					count: '0'
+				},
+				'B': {
+					val: '选项二',
+					count: '0'
+				}
+			}
+		};
+	}
 	constructor(props) {
 		super(props);
 		const { question } = props,
@@ -119,6 +135,62 @@ class Question extends Component {
 		}
 		return patches;
 	}
+	handleQuestionChange(e) {
+		const { activeInput, questions } = this.state,
+			{ value } = e.target,
+			question = activeInput.split('-');
+		question[0] === 'title' ?
+			(questions[question[1]].title = value) :
+			(null)
+ 		this.setState({
+ 			questions
+		});
+	}
+	addQuestion(type) {
+		const { questions } = this.state;
+		questions.push(
+			Question[`default${type}`]()
+		);
+		this.setState({
+			questions,
+			area: !this.state.area
+		});
+	}
+	getOptionIcon(type) {
+		var name;
+		switch(type) {
+			case 'radio':
+				name = 'circle-blank';
+				break;
+		}
+		return (
+			<Icon name={name} extendClass="option-icon" />
+		);
+	}
+	getOptions({ options, type }, id) {
+		const keys = Object.keys(options);
+		return (
+			<div>
+				{	
+					keys.map((key, i) => (
+						<p key={i} className="question-option" data-option={`${id}-${key}`}>
+							{this.getOptionIcon(type)}
+							{options[key].val}
+							<Icon name="remove" extendClass="option-remove" />
+						</p>
+					))
+				}
+			</div>
+		);
+	}
+	delegate(e) {
+		const { className } = e.target;
+		switch(className) {
+			case 'one-question-title':
+				let data = e.target.getAttribute('data-title');
+				this.showInput(`title-${data}`);
+		}
+	}
 	render() {
 		const { 
 			title, 
@@ -152,8 +224,29 @@ class Question extends Component {
 						: <h2 className="title">{title}</h2>
 					}
 				</div>
-				<div className="questions-container">
-
+				<div className="questions-container" onClick={::this.delegate}>
+					{
+						questions.map((val, i) => {
+							return (
+								<div className="one-question" key={i}>
+									<h2>
+										Q{i + 1}
+										{
+											activeInput === `title-${i}` ?
+											<input type="text" 
+												autoFocus
+												value={val.title} 
+												onBlur={::this.inputBlur}   
+												onChange={::this.handleQuestionChange}
+												className="question-title-input" /> :
+											<span className="one-question-title" data-title={i}>{val.title}</span>
+										}
+									</h2>
+									{ this.getOptions(val, i) }
+								</div>
+							);
+						})
+					}
 				</div>
 				<div className="add-question-container">
 					<div className="question-type"
@@ -162,7 +255,9 @@ class Question extends Component {
 						} : {
 						}}
 					>
-						<IconButton text="单选" icon="circle-blank" />
+						<IconButton text="单选" 
+							icon="circle-blank" 
+							handleClick={() => this.addQuestion('Radio')} />
 						<IconButton text="多选" icon="check" />
 						<IconButton text="文本" icon="list-alt" />
 					</div>

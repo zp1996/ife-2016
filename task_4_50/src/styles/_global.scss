@@ -15,6 +15,16 @@ body {
 	background: #fff;
 	box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
 }
+@mixin span-to-input($h, $l: 0) {
+	$border-size: 1px;
+	box-sizing: border-box;
+	position: relative;
+	top: -$border-size;
+	left: -$l * $border-size;
+	border: $border-size solid #03A9F4;
+	font-weight: bold;
+	height: $h;
+}
 .index-container {
 	padding: 15px;
 	@include index-container;
@@ -115,13 +125,7 @@ body {
 		background: $hover-color;
 	}
 	&-input {
-		$border-size: 1px;
-		height: 3 * $font-size-big;
-		box-sizing: border-box;
-		position: relative;
-		top: -$border-size;
-		border: $border-size solid #03A9F4;
-		font-weight: bold;
+		@include span-to-input(3 * $font-size-big);
 		color: #555;
 		&:focus {
 			background: $hover-color;
@@ -129,7 +133,7 @@ body {
 	}
 }
 .add-question-container {
-	margin: 1.5 * $font-size-big auto;
+	margin-bottom: 1.5 * $font-size-big;
 	border: 1px solid $add-question-border-color;
 	cursor: pointer;
 }
@@ -195,4 +199,54 @@ body {
 .question-calendar {
 	top: -51px;
 	left: 130px;
+}
+.questions-container {
+	padding: 15px;
+}
+.one-question {
+	padding: 25px;
+	&:hover {
+		background: $hover-color;
+	}
+	h2 {
+		font-size: $font-size-big;
+		line-height: 1.5 * $font-size-big;
+	}
+}
+.question-option {
+	text-indent: 47px;
+	margin: 5px 0px;
+	font-size: $font-size-mid;
+	line-height: 1.5 * $font-size-mid;
+	i {
+		text-indent: 0px;
+	}
+	.option-remove {
+		display: none;
+	}
+	&:hover .option-remove{
+		display: inline;
+	}
+}
+$option-icon-margin: 10px;
+.option-remove {
+	margin-left: $option-icon-margin;
+	color: $active-color;
+	cursor: pointer;
+	font-size: $font-size-big;
+}
+.option-icon {
+	margin-right: $option-icon-margin;
+}
+.one-question-title {
+	margin: 1.5 * $option-icon-margin;
+}
+.question-title-input {
+	@extend .one-question-title;
+	font-size: $font-size-big;
+	width: 80%;
+	background: $hover-color;
+	margin: 0px;
+	margin-left: 15px;
+	@include span-to-input(1.5 * $font-size-big, 2);
 }

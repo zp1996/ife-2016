@@ -35,6 +35,7 @@ $layer-class-prefix: 'layer';
 .#{$layer-class-prefix}-title {
 	@include lh-equal-h(2 * $font-size-big);
 	font-size: $font-size-big;
+	text-align: left;
 	span {
 		margin-left: 10px;
 	}
@@ -44,6 +45,9 @@ $layer-class-prefix: 'layer';
 		cursor: pointer;
 		color: #aaa;
 		@include lh-equal-h(2 * $font-size-big);
+		&:hover {
+			color: $active-color;
+		}
 	}
 	background: rgba(226, 226, 226, 0.3);
 }
