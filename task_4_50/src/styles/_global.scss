@@ -22,8 +22,12 @@ body {
 	top: -$border-size;
 	left: -$l * $border-size;
 	border: $border-size solid #03A9F4;
-	font-weight: bold;
 	height: $h;
+	margin: 0px;
+}
+@mixin question-change {
+	width: 80%;
+	background: $hover-color;
 }
 .index-container {
 	padding: 15px;
@@ -127,6 +131,7 @@ body {
 	&-input {
 		@include span-to-input(3 * $font-size-big);
 		color: #555;
+		font-weight: bold;
 		&:focus {
 			background: $hover-color;
 		}
@@ -213,9 +218,9 @@ body {
 		line-height: 1.5 * $font-size-big;
 	}
 }
+$p-margin: 47px;
 .question-option {
-	text-indent: 47px;
-	margin: 5px 0px;
+	margin: 5px 0px 5px $p-margin;
 	font-size: $font-size-mid;
 	line-height: 1.5 * $font-size-mid;
 	i {
@@ -243,10 +248,29 @@ $option-icon-margin: 10px;
 }
 .question-title-input {
 	@extend .one-question-title;
-	font-size: $font-size-big;
-	width: 80%;
-	background: $hover-color;
-	margin: 0px;
-	margin-left: 15px;
 	@include span-to-input(1.5 * $font-size-big, 2);
+	@include question-change;
+	font-weight: bold;
+	font-size: $font-size-big;
+	margin-left: 15px;
+}
+.question-option-input {
+	@include span-to-input(1.5 * $font-size-mid, 2);
+	@include question-change;
+	font-size: $font-size-mid;
+	top: 0px;
+}
+.add-option {
+	margin-left: $p-margin;
+	border: 1px dashed #000;
+	text-align: center;
+	font-size: $font-size-mid;
+	line-height: 1.5 * $font-size-mid;
+	color: #555;
+	cursor: pointer;
+	opacity: 0;
+	&:hover {
+		opacity: 1;
+		transition: opacity 0.3s;
+	}
 }

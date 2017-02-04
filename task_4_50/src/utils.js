@@ -125,7 +125,10 @@ const utils = {
         return new Date(year, month - 1, 1).getDay();
     },
     noop: () => {},
-    clone
+    clone,
+    getDomData: (dom, val) => {
+        return dom.getAttribute(`data-${val}`);
+    }
 };
 
 module.exports = utils;

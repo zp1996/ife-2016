@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { addItem, changeTitle, changeDate } from '../actions/items';
 
 import config from '../config';
-import { Data, clone } from "../utils";
+import { Data, clone, getDomData } from "../utils";
 
 import Layer from '../components/Layer/index';
 import Icon from '../components/Icon/index';
@@ -26,16 +26,13 @@ class Question extends Component {
 		return {
 			type: 'radio',
 			title: '单选题',
-			options: {
-				'A': {
-					val: '选项一',
-					count: '0'
-				},
-				'B': {
-					val: '选项二',
-					count: '0'
-				}
-			}
+			options: [{
+				val: '选项1',
+				count: '0'
+			}, {
+				val: '选项2',
+				count: '0'
+			}]
 		};
 	}
 	constructor(props) {
@@ -57,9 +54,7 @@ class Question extends Component {
 		});
 	}
 	changeDate(date) {
-		this.setState({
-			date
-		});
+		this.setState({ date });
 		this.changeInnerState('calendar');
 	}
 	inputBlur() {
@@ -135,16 +130,34 @@ class Question extends Component {
 		}
 		return patches;
 	}
-	handleQuestionChange(e) {
+	addOption(id) {
+		const { questions } = this.state,
+			{ options } = questions[id];
+		options.push({
+			val: `选项${options.length + 1}`,
+			count: 0
+		});
+		this.setState({ questions })
+	}
+	changeQuestionTitle(e) {
 		const { activeInput, questions } = this.state,
 			{ value } = e.target,
-			question = activeInput.split('-');
-		question[0] === 'title' ?
-			(questions[question[1]].title = value) :
-			(null)
- 		this.setState({
- 			questions
-		});
+			id = activeInput.split('-')[1];
+		questions[id].title = value
+ 		this.setState({ questions });
+	}
+	changeOptionVal(e) {
+		const { activeInput, questions } = this.state,
+			{ value } = e.target,
+			data = activeInput.split('-');
+		questions[data[1]].options[data[2]].val = value; 
+		this.setState({ questions });
+	}
+	delQuestionOption(data) {
+		const { questions } = this.state;
+		data = data.split('-').map(val => Number(val));
+		questions[data[0]].options.splice(data[1], 1);
+		this.setState({ questions });
 	}
 	addQuestion(type) {
 		const { questions } = this.state;
@@ -155,6 +168,33 @@ class Question extends Component {
 			questions,
 			area: !this.state.area
 		});
+	}
+	delQuestion() {
+
+	}
+	delegate(e) {
+		const { className } = e.target;
+		var data;
+		switch(className) {
+			case 'one-question-title':
+				data = getDomData(e.target, 'title');
+				this.showInput(`title-${data}`);
+				break;
+			case 'option-remove icon-remove':
+				data = getDomData(e.target.parentNode, 'option');
+				this.delQuestionOption(data);
+				break;
+			case 'question-option':
+				data = getDomData(e.target, 'option');
+				this.showInput(`title-${data}`);
+				break;
+			case 'add-option':
+			case 'add-option-icon icon-plus':
+				data = getDomData(e.target, 'question') || 
+					getDomData(e.target.parentNode, 'question');
+				this.addOption(data);
+				break;
+		}
 	}
 	getOptionIcon(type) {
 		var name;
@@ -168,28 +208,30 @@ class Question extends Component {
 		);
 	}
 	getOptions({ options, type }, id) {
-		const keys = Object.keys(options);
+		const { activeInput } = this.state;
 		return (
 			<div>
 				{	
-					keys.map((key, i) => (
-						<p key={i} className="question-option" data-option={`${id}-${key}`}>
+					options.map((option, i) => (
+						<p key={i} className="question-option" 
+							data-option={`${id}-${i}`}
+						>
 							{this.getOptionIcon(type)}
-							{options[key].val}
+							{
+								activeInput === `title-${id}-${i}` ?
+									<input type="text" autoFocus
+										value={option.val} 
+										onBlur={::this.inputBlur}   
+										onChange={::this.changeOptionVal}
+										className="question-option-input" /> : 
+									option.val
+							}
 							<Icon name="remove" extendClass="option-remove" />
 						</p>
 					))
 				}
 			</div>
 		);
-	}
-	delegate(e) {
-		const { className } = e.target;
-		switch(className) {
-			case 'one-question-title':
-				let data = e.target.getAttribute('data-title');
-				this.showInput(`title-${data}`);
-		}
 	}
 	render() {
 		const { 
@@ -237,12 +279,18 @@ class Question extends Component {
 												autoFocus
 												value={val.title} 
 												onBlur={::this.inputBlur}   
-												onChange={::this.handleQuestionChange}
+												onChange={::this.changeQuestionTitle}
 												className="question-title-input" /> :
 											<span className="one-question-title" data-title={i}>{val.title}</span>
 										}
 									</h2>
 									{ this.getOptions(val, i) }
+									<div className="add-option" data-question={i}>
+										<Icon name="plus" extendClass="add-option-icon" />
+									</div>
+									<span className="handle-area">
+										复用
+									</span>
 								</div>
 							);
 						})
