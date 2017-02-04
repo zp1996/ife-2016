@@ -12,3 +12,30 @@
 	left: 0px;
 	right: 0px;
 }
+@mixin index-container {
+	box-sizing: border-box;
+	width: $container-width;
+	margin: 50px auto;
+	background: #fff;
+	box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+}
+@mixin span-to-input($h, $l: 0) {
+	$border-size: 1px;
+	box-sizing: border-box;
+	position: relative;
+	top: -$border-size;
+	left: -$l * $border-size;
+	border: $border-size solid #03A9F4;
+	height: $h;
+	margin: 0px;
+}
+@mixin question-change {
+	width: 80%;
+	background: $hover-color;
+}
+@mixin left-input {
+	display: inline-block;
+	width: $font-size-mid;
+	height: $font-size-mid;
+	cursor: pointer;
+}

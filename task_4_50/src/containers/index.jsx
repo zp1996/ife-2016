@@ -21,12 +21,17 @@ const edit = (id) => {
 	Dispatch(toggleQuestion(id));
 	browserHistory.push(`/question/${id}`);
 };
+
+const answer = (id) => {
+	Dispatch(toggleQuestion(id));
+	browserHistory.push(`/answer/${id}`);
+};
 	
 const getTds = {
 	status: val => getStatus(val),
 	date: val => val.join('-'),
 	title: val => val
-};
+}; 
 
 const getStatus = (val) => {
 	switch(val) {
@@ -80,9 +85,7 @@ class Buttons extends Component {
 				</Link>
 			);
 		const isAnswer = status === 1 ? (
-				<Link to={`/answer/${id}`} className="button-link">
-					回答
-				</Link>
+				<Button text="回答" handleClick={ () => { answer(id) } } />
 			) : (
 				<Button text="编辑" handleClick={ () => { edit(id) } } />
 			);

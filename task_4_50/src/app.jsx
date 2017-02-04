@@ -10,6 +10,7 @@ import reducer from './reducers/index';
 
 import Index from './containers/index';
 import DataQuestion from './containers/Question';
+import Answer from './containers/Answer';
 import Header from './components/Header/index';
 
 import styles from './index.scss';
@@ -24,7 +25,7 @@ render(
 				<Route path="/" component={Index} />
 				<Route path="/add-question" component={DataQuestion} />
 				<Route path="/question/:id" component={DataQuestion} />
-				<Route path="/answer/:id" component={DataQuestion} />
+				<Route path="/answer/:id" component={Answer} />
 			</Router>
 		</div>
 	</Provider>,

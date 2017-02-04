@@ -8,27 +8,6 @@ body {
 	font-color: $font-color;
 	background: $body-background;
 }
-@mixin index-container {
-	box-sizing: border-box;
-	width: $container-width;
-	margin: 50px auto;
-	background: #fff;
-	box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
-}
-@mixin span-to-input($h, $l: 0) {
-	$border-size: 1px;
-	box-sizing: border-box;
-	position: relative;
-	top: -$border-size;
-	left: -$l * $border-size;
-	border: $border-size solid #03A9F4;
-	height: $h;
-	margin: 0px;
-}
-@mixin question-change {
-	width: 80%;
-	background: $hover-color;
-}
 .index-container {
 	padding: 15px;
 	@include index-container;
@@ -282,6 +261,7 @@ $option-icon-margin: 10px;
 	height: 4 * $font-size-big;
 	resize: none;
 	margin: 10px 0px 10px $p-margin;
+	padding: 10px;
 }
 .handle-area {
 	text-align: right;
@@ -297,10 +277,19 @@ $option-icon-margin: 10px;
 .choose-require {
 	float: left;
 	input {
-		vertical-align: middle;
-		cursor: pointer;
-		display: inline-block;
-		width: $font-size-mid;
-		height: $font-size-mid;
+		@include left-input;
+	}
+}
+.radio-input {
+	@include left-input;
+	margin-right: 15px;
+}
+.submit-answer {
+	text-align: center;
+	button {
+		@include lh-equal-h(2.5 * $font-size-mid);
+		font-size: $font-size-mid;
+		padding: 0px 2 * $font-size-mid;
+		box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
 	}
 }
