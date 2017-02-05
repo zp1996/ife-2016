@@ -14,6 +14,8 @@ const item = (state=Data.data, action) => {
 			return Data.publishItem(action.id);
 		case 'UPDATE_QUESTIONS':
 			return Data.updateQuestions(action.id, action.questions);
+		case 'ANSWER_ITEM':
+			return Data.answerItem(action.id, action.answers);
 		default: 
 			return state;
 	}

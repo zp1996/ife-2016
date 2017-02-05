@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 
+import { answerItem } from '../actions/items';
+
 import { getDomData } from "../utils";
 
 import Button from '../components/Button/index';
@@ -12,6 +14,7 @@ class Answer extends Component {
 		super(props);
 		const { params: { id } } = props,
 			{ data: { questions, status} } = props;
+		this.id = id;
 		if (status !== 1) {
 			browserHistory.push('/');
 		}
@@ -66,6 +69,8 @@ class Answer extends Component {
 				content: `Q${i + 1}为必填题，请填写！`
 			});
 		} else {
+			const { dispatch } = this.props;
+			dispatch(answerItem(this.id, answers));
 			this.showLayer({
 				content: `提交成功！`,
 				yes: () => browserHistory.push('/')

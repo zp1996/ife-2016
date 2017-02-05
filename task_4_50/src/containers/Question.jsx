@@ -28,7 +28,7 @@ class Question extends Component {
 		for (let i = 1; i <= count; i++) {
 			options.push({
 				val: `选项${i}`,
-				count: '0'
+				count: 0
 			});
 		}
 		return { type, title, options };

@@ -28,6 +28,21 @@ try {
     g = global;
 }
 class Data {
+    static getAnswer = {
+        text: (answer, question) => {
+            question.answers.push(answer.value);
+        },
+        radio: (answer, question) => {
+            question.options[answer.value].count++;
+        },
+        check: (answer, question) => {
+            const arr = answer.value,
+                { length } = arr;
+            for (let i = 0; i < length; i++) {
+                question.options[arr[i]].count++;
+            }
+        }
+    }
     constructor() {
         var data = this.readLocalStorage();
         this.data = data == null ? Data.defaultData() : JSON.parse(data).data;
@@ -89,6 +104,18 @@ class Data {
         return this.changeItem(id, ({ items }) => {
             items[id].status = 1;
         });
+    }
+    answerItem(id, answers) {
+        const { length } = answers,
+            { data: { items } } = this,
+            { questions } = items[id];
+        for (let i = 0; i < length; i++) {
+            Data.getAnswer[questions[i].type](
+                answers[i], questions[i]
+            );
+        }
+        this.writeLocalStroage();
+        return this.data;
     }
     static defaultData() {
         const data = Object.create(null);

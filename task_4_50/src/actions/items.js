@@ -30,3 +30,9 @@ export const updateQuestions = (id, questions) => ({
 	id,
 	questions
 });
+
+export const answerItem = (id, answers) => ({
+	type: 'ANSWER_ITEM',
+	id,
+	answers
+});
