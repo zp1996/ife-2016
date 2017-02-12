@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "dev": "NODE_PORT=3000 node server.js"
+    "dev": "NODE_PORT=3000 NODE_ENV=dev node server.js"
   },
   "repository": {
     "type": "git",
@@ -48,6 +48,7 @@
   },
   "dependencies": {
     "classnames": "^2.2.5",
+    "express": "^4.14.1",
     "react": "^15.4.2",
     "react-addons-css-transition-group": "^15.4.2",
     "react-dom": "^15.4.2",

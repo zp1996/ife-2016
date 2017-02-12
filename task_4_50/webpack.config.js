@@ -58,6 +58,7 @@ module.exports = {
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
         new webpack.optimize.CommonsChunkPlugin('lib', 'lib.bundle.js'),
+        new webpack.optimize.UglifyJsPlugin(),
         new ExtractTextPlugin('css/[name].style.css'),
         new webpack.NoErrorsPlugin()
     ]

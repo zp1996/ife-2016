@@ -6,7 +6,13 @@ const webpack = require('webpack'),
 new WebpackDevServer(webpack(config), {
 	publicPath: config.output.publicPath,
   	hot: true,
-  	historyApiFallback: true
+  	historyApiFallback: true,
+  	proxy: {
+  		'/server': {
+  			target: 'http://localhost:9000',
+  			pathRewrite: {'^/server': ''}
+  		}
+  	}
 }).listen(port, 'localhost', (err, res) => {
 	if (err) console.log(err);
 	console.log(`server is on port ${port}`);
