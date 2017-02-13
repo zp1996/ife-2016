@@ -2,9 +2,13 @@ import { Data } from '../utils';
 
 const numberRE = /\/(\d+)$/;
 
-const defaultState = () => {
-	const { href } = location,
-		matches = href.match(numberRE),
+const defaultState = function() {
+	try {
+		var { href } = location
+	} catch(e) {
+		href = '';
+	}
+	const matches = href.match(numberRE),
 		id = matches && matches[1];
 	return id == null ? Object.create(null) : Data.data.items[id];
 };

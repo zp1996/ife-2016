@@ -4,7 +4,13 @@ const webpack = require('webpack'),
     HtmlWebpackPlugin = require('html-webpack-plugin'),
     exec = require('child_process').exec,
     isProduction = process.env.NODE_ENV === 'production',
-    htmlWebpackPlugins = [];
+    isServer = process.env.NODE_ENV === 'server';
+    htmlWebpackPlugins = [],
+    app  = isProduction || isServer ? [ './src/app' ] : [
+        './src/app',
+        `webpack-dev-server/client?http://localhost:${3000}`,
+        'webpack/hot/only-dev-server'
+    ];
 
 
 // 首先删除之前打包文件
@@ -14,11 +20,7 @@ exec('rm -r -f ./build', () => {
 
 module.exports = {
     entry: {
-        app: [
-            './src/app',
-            `webpack-dev-server/client?http://localhost:${3000}`,
-            'webpack/hot/only-dev-server'
-        ],
+        app,
         lib: [
             "react",
             "react-dom",
